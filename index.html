@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Primary Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelRevive AI - Free AI Image Enhancer & Photo Upscaler</title>
+    <meta name="description" content="Enhance image quality online for free with PixelRevive AI. Upscale photos, sharpen details, remove blur, and restore old images using advanced AI.">
+    <meta name="keywords" content="AI image enhancer, photo enhancer, image upscaler, remove blur, restore old photos, free image enhancement, PixelRevive AI">
+    <meta name="author" content="PixelRevive AI">
+    <meta name="robots" content="index, follow">
+    <meta name="google-site-verification" content="90OzD_UbKHrP9x06snDcAAzpCHe1xE6SfTXam5_7hII" />
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="PixelRevive AI - Enhance, Upscale & Restore Images with AI">
+    <meta property="og:description" content="Enhance image quality online for free with PixelRevive AI. Upscale photos, sharpen details, remove blur, and restore old images using advanced AI.">
+    <meta property="og:image" content="/preview.png">
+    <meta property="og:url" content="https://pixelreviveai.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="PixelRevive AI">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PixelRevive AI - Free AI Image Enhancer">
+    <meta name="twitter:description" content="Enhance image quality online for free. Upscale, sharpen, remove blur, and restore old photos.">
+    <meta name="twitter:image" content="/preview.png">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://pixelreviveai.com/">
+
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a2e;
+            --accent-primary: #6c5ce7;
+            --accent-secondary: #a29bfe;
+            --accent-glow: rgba(108, 92, 231, 0.3);
+            --text-primary: #e4e4f0;
+            --text-secondary: #b0b0c0;
+            --text-muted: #7878a0;
+            --border: #2a2a3e;
+            --success: #00cec9;
+            --error: #ff7675;
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* Disable inspect/developer tools */
+        body {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Animated background */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image: 
+                linear-gradient(rgba(108, 92, 231, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(108, 92, 231, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+            animation: float 8s ease-in-out infinite;
+        }
+        .glow-orb-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--accent-primary);
+            top: -150px;
+            right: -150px;
+        }
+        .glow-orb-2 {
+            width: 400px;
+            height: 400px;
+            background: #00cec9;
+            bottom: -100px;
+            left: -100px;
+            animation-delay: -4s;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -30px); }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(18, 18, 26, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+        }
+        .nav-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        .logo-img {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 2px solid var(--accent-primary);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+        }
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-primary);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-cta {
+            background: var(--accent-primary);
+            color: white !important;
+            padding: 10px 22px !important;
+            border-radius: 25px;
+            font-weight: 600 !important;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(108, 92, 231, 0.5);
+        }
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+        .mobile-menu-btn span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background: var(--text-primary);
+            margin: 5px 0;
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        /* Main Container */
+        .main-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0 2rem;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            color: var(--accent-secondary);
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.2rem;
+            background: linear-gradient(135deg, #e4e4f0 0%, #a29bfe 50%, #6c5ce7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            background: var(--bg-secondary);
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            margin: 2rem 0;
+        }
+        .upload-section:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 40px var(--accent-glow);
+        }
+        .upload-section.drag-active {
+            border-color: var(--accent-primary);
+            background: rgba(108, 92, 231, 0.05);
+            box-shadow: 0 0 60px var(--accent-glow);
+        }
+        .upload-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1.5rem;
+            background: var(--bg-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--border);
+        }
+        .upload-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--accent-secondary);
+        }
+        .upload-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .upload-info {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .upload-btn {
+            display: inline-block;
+            background: var(--accent-primary);
+            color: white;
+            padding: 14px 36px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 25px var(--accent-glow);
+        }
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 40px rgba(108, 92, 231, 0.5);
+        }
+        .upload-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        #fileInput {
+            display: none;
+        }
+
+        /* Preview & Result */
+        .preview-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .preview-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+        }
+        .preview-card h3 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .preview-image-container {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+        }
+        .preview-image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--success);
+            color: #000;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 206, 201, 0.3);
+        }
+
+        /* Loading */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 15, 0.9);
+            z-index: 200;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .loading-overlay.active {
+            display: flex;
+        }
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent-primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 1.5rem;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .loading-text {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 4rem 0;
+        }
+        .feature-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        .feature-icon {
+            width: 55px;
+            height: 55px;
+            margin: 0 auto 1.2rem;
+            background: var(--bg-card);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .feature-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.7rem;
+        }
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            margin: 4rem 0;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+        }
+        .faq-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .faq-question {
+            padding: 1.3rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1rem;
+            user-select: none;
+        }
+        .faq-question:hover {
+            color: var(--accent-secondary);
+        }
+        .faq-icon {
+            transition: var(--transition);
+            font-size: 1.2rem;
+            color: var(--accent-secondary);
+        }
+        .faq-item.open .faq-icon {
+            transform: rotate(45deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            padding: 0 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 300px;
+            padding: 0 1.5rem 1.3rem;
+        }
+
+        /* Telegram CTA */
+        .telegram-cta {
+            background: linear-gradient(135deg, #1a1a2e, #1e1e35);
+            border: 2px solid #0088cc;
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            text-align: center;
+            margin: 4rem 0;
+        }
+        .telegram-cta h2 {
+            margin-bottom: 0.8rem;
+        }
+        .telegram-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #0088cc;
+            color: white;
+            padding: 14px 32px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+        .telegram-btn:hover {
+            background: #0099e6;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 136, 204, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 4rem;
+        }
+
+        /* Error Message */
+        .error-msg {
+            background: rgba(255, 118, 117, 0.1);
+            border: 1px solid var(--error);
+            color: var(--error);
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            margin: 1rem 0;
+            display: none;
+        }
+        .error-msg.show {
+            display: block;
+        }
+        .success-msg {
+            background: rgba(0, 206, 201, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            margin: 1rem 0;
+            display: none;
+        }
+        .success-msg.show {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: var(--bg-secondary);
+                flex-direction: column;
+                padding: 1.5rem;
+                border-bottom: 1px solid var(--border);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .preview-area {
+                grid-template-columns: 1fr;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p class="loading-text">Enhancing your image with AI...</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo-section">
+                <img src="https://i.ibb.co/XrvQjXRp/photo.jpg" alt="PixelRevive AI Logo" class="logo-img" width="42" height="42">
+                <span class="logo-text">PixelRevive AI</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="/">Home</a></li>
+                <li><a href="/image-enhancer">AI Enhancer</a></li>
+                <li><a href="/photo-enhancer">Photo Enhancer</a></li>
+                <li><a href="/image-upscaler">Upscaler</a></li>
+                <li><a href="/remove-blur">Remove Blur</a></li>
+                <li><a href="/restore-old-photo">Restore Photos</a></li>
+                <li><a href="#upload-section" class="nav-cta">Enhance Now</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <span class="hero-badge">⚡ Powered by Advanced AI</span>
+            <h1>Revive Your Images<br>With PixelPerfect AI</h1>
+            <p class="hero-subtitle">
+                Transform low-quality, blurry, or old photos into stunning high-definition images. 
+                Our AI enhances every detail, upscales resolution, and restores memories in seconds.
+            </p>
+        </section>
+
+        <!-- Upload Section -->
+        <section class="upload-section" id="upload-section">
+            <div class="upload-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+            </div>
+            <p class="upload-title">Drop your image here or click to upload</p>
+            <p class="upload-info">Supports JPG, PNG, WebP — Max 10MB</p>
+            <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp">
+            <button class="upload-btn" id="uploadBtn">Choose Image</button>
+            <div class="error-msg" id="errorMsg"></div>
+            <div class="success-msg" id="successMsg"></div>
+        </section>
+
+        <!-- Preview & Result -->
+        <div class="preview-area" id="previewArea" style="display:none;">
+            <div class="preview-card">
+                <h3>Original Image</h3>
+                <div class="preview-image-container">
+                    <img id="originalPreview" src="" alt="Original">
+                </div>
+            </div>
+            <div class="preview-card">
+                <h3>Enhanced Result</h3>
+                <div class="preview-image-container">
+                    <img id="enhancedPreview" src="" alt="Enhanced">
+                </div>
+                <a href="#" class="download-btn" id="downloadBtn" target="_blank" style="display:none;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Download Enhanced Image
+                </a>
+            </div>
+        </div>
+
+        <!-- Features Grid -->
+        <section class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#a29bfe" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                </div>
+                <h3>AI Image Enhancer</h3>
+                <p>Advanced neural networks analyze and enhance every pixel, bringing out hidden details and improving overall quality.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00cec9" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                </div>
+                <h3>Photo Upscaler</h3>
+                <p>Upscale images up to 4x resolution without losing quality. Perfect for printing, presentations, and social media.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ff7675" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+                </div>
+                <h3>Restore Old Photos</h3>
+                <p>Breathe new life into vintage photographs. Our AI removes scratches, fixes fading, and restores original colors.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fdcb6e" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </div>
+                <h3>Remove Blur</h3>
+                <p>Sharpen blurry images instantly. Our deblurring AI recovers lost details from motion blur, focus issues, and low light.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#6c5ce7" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </div>
+                <h3>Face Enhancer</h3>
+                <p>Specifically optimized for portraits. Enhance facial features, smooth skin naturally, and sharpen eyes and hair.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00cec9" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                </div>
+                <h3>Free & Fast</h3>
+                <p>No sign-up required. Process images in seconds with our optimized AI pipeline. Download high-quality results instantly.</p>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How does PixelRevive AI enhance images?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    PixelRevive AI uses state-of-the-art deep learning models trained on millions of images. Our AI analyzes your photo, identifies areas that need improvement, and applies intelligent enhancements to sharpen details, reduce noise, upscale resolution, and restore colors. The entire process happens in the cloud and takes just seconds.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Is PixelRevive AI free to use?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Yes! PixelRevive AI offers free image enhancement with no sign-up required. You can upload and enhance images directly in your browser. For higher volumes or commercial use, check out our Telegram bot @Image_Enhancer_Improver_bot for additional features.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What image formats are supported?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    We support JPG, JPEG, PNG, and WebP formats. Maximum file size is 10MB per image. For best results, use images with at least 200x200 pixels resolution.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Can I use PixelRevive AI to restore old photos?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Absolutely! Our AI is excellent at restoring old and damaged photographs. It can remove scratches, reduce noise, fix fading, enhance colors, and even upscale low-resolution vintage photos to modern quality standards.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How do I use the Telegram bot?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Simply open Telegram and search for @Image_Enhancer_Improver_bot. Start a conversation, send your image, and the bot will automatically enhance it and return the high-quality result. It's fast, convenient, and works on mobile devices.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Is my data secure? Are uploaded images stored?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    We take privacy seriously. Uploaded images are processed temporarily and automatically deleted from our servers after processing. We use tmpfiles.org for temporary storage with automatic expiration. We never share or sell your images.
+                </div>
+            </div>
+        </section>
+
+        <!-- Telegram CTA -->
+        <section class="telegram-cta">
+            <svg width="50" height="50" viewBox="0 0 24 24" fill="#0088cc"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.46-1.901-.903-1.056-.692-1.653-1.123-2.678-1.799-1.185-.781-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.015-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.062 3.345-.479.329-.913.489-1.302.481-.428-.009-1.252-.242-1.865-.441-.752-.245-1.349-.374-1.297-.789.027-.216.324-.437.892-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635.099-.002.321.023.465.14.12.098.153.228.17.334.016.106.036.347.02.535z"/></svg>
+            <h2>Enhance Images on Telegram</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">Use our Telegram bot for quick, on-the-go image enhancement</p>
+            <a href="https://t.me/Image_Enhancer_Improver_bot" target="_blank" rel="noopener" class="telegram-btn">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.46-1.901-.903-1.056-.692-1.653-1.123-2.678-1.799-1.185-.781-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.015-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.062 3.345-.479.329-.913.489-1.302.481-.428-.009-1.252-.242-1.865-.441-.752-.245-1.349-.374-1.297-.789.027-.216.324-.437.892-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635.099-.002.321.023.465.14.12.098.153.228.17.334.016.106.036.347.02.535z"/></svg>
+                @Image_Enhancer_Improver_bot
+            </a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2024 PixelRevive AI. All rights reserved. | Free AI Image Enhancer & Photo Upscaler</p>
+    </footer>
+
+    <script>
+        // ============ SECURITY: Disable DevTools & Inspect ============
+        (function() {
+            // Disable right-click
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+
+            // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+            document.addEventListener('keydown', function(e) {
+                if (
+                    e.key === 'F12' ||
+                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+                    (e.ctrlKey && e.key === 'U') ||
+                    (e.ctrlKey && e.key === 'S')
+                ) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
+            // Detect DevTools
+            let devtoolsOpen = false;
+            const threshold = 160;
+            setInterval(function() {
+                const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+                const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+                if (widthThreshold || heightThreshold) {
+                    if (!devtoolsOpen) {
+                        devtoolsOpen = true;
+                        document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;color:#ff7675;font-size:1.5rem;font-family:sans-serif;">Developer tools are disabled for security reasons.</div>';
+                    }
+                }
+            }, 1000);
+
+            // Override console methods
+            const noop = function() {};
+            Object.defineProperty(window, 'console', {
+                get: function() {
+                    return {
+                        log: noop,
+                        warn: noop,
+                        error: noop,
+                        info: noop,
+                        debug: noop,
+                        table: noop,
+                        trace: noop,
+                        dir: noop,
+                        dirxml: noop,
+                        group: noop,
+                        groupEnd: noop,
+                        time: noop,
+                        timeEnd: noop,
+                        profile: noop,
+                        profileEnd: noop,
+                        count: noop,
+                        assert: noop,
+                        clear: noop,
+                        memory: noop
+                    };
+                }
+            });
+        })();
+
+        // ============ UNIQUE SESSION ID GENERATION ============
+        function generateSessionId() {
+            const timestamp = Date.now().toString(36);
+            const randomPart = Math.random().toString(36).substring(2, 15);
+            const navigatorHash = btoa(navigator.userAgent + navigator.language + screen.width + screen.height).substring(0, 20);
+            return 'pr_' + timestamp + '_' + randomPart + '_' + navigatorHash.replace(/[^a-zA-Z0-9]/g, '');
+        }
+
+        const sessionId = generateSessionId();
+        console.log('Session initialized'); // Won't actually log due to overridden console
+
+        // ============ DOM ELEMENTS ============
+        const fileInput = document.getElementById('fileInput');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const uploadSection = document.getElementById('upload-section');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const previewArea = document.getElementById('previewArea');
+        const originalPreview = document.getElementById('originalPreview');
+        const enhancedPreview = document.getElementById('enhancedPreview');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const errorMsg = document.getElementById('errorMsg');
+        const successMsg = document.getElementById('successMsg');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        // ============ MOBILE MENU ============
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // ============ FILE UPLOAD HANDLING ============
+        uploadBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        uploadSection.addEventListener('click', (e) => {
+            if (e.target !== uploadBtn) {
+                fileInput.click();
+            }
+        });
+
+        // Drag and drop
+        uploadSection.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadSection.classList.add('drag-active');
+        });
+
+        uploadSection.addEventListener('dragleave', () => {
+            uploadSection.classList.remove('drag-active');
+        });
+
+        uploadSection.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadSection.classList.remove('drag-active');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                handleFile(fileInput.files[0]);
+            }
+        });
+
+        function handleFile(file) {
+            // Reset messages
+            errorMsg.classList.remove('show');
+            successMsg.classList.remove('show');
+
+            // Validate file type
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+            if (!allowedTypes.includes(file.type)) {
+                showError('Please upload a JPG, PNG, or WebP image.');
+                return;
+            }
+
+            // Validate file size (10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                showError('File size must be less than 10MB.');
+                return;
+            }
+
+            // Show original preview
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                originalPreview.src = e.target.result;
+                previewArea.style.display = 'grid';
+                enhancedPreview.src = '';
+                downloadBtn.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+
+            // Upload and process
+            processImage(file);
+        }
+
+        // ============ IMAGE PROCESSING ============
+        async function processImage(file) {
+            loadingOverlay.classList.add('active');
+            errorMsg.classList.remove('show');
+            successMsg.classList.remove('show');
+
+            try {
+                // Step 1: Upload to tmpfiles.org
+                const tmpUrl = await uploadToTmpFiles(file);
+
+                // Step 2: Enhance using primary API
+                const enhancedUrl = await enhanceImage(tmpUrl);
+
+                // Step 3: Upscale using secondary API
+                const upscaledUrl = await upscaleImage(tmpUrl);
+
+                // Display result (use upscaled if available, otherwise enhanced)
+                const finalUrl = upscaledUrl || enhancedUrl;
+                enhancedPreview.src = finalUrl;
+                downloadBtn.href = finalUrl;
+                downloadBtn.style.display = 'inline-flex';
+                previewArea.style.display = 'grid';
+                successMsg.textContent = 'Image enhanced successfully! Click download to save.';
+                successMsg.classList.add('show');
+
+            } catch (error) {
+                console.error('Processing error:', error);
+                showError('Failed to enhance image. Please try again.');
+            } finally {
+                loadingOverlay.classList.remove('active');
+            }
+        }
+
+        async function uploadToTmpFiles(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('expire', '3600'); // 1 hour
+
+            const response = await fetch('https://tmpfiles.org/api/v1/upload', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'User-Agent': navigator.userAgent,
+                    'X-Session-Id': sessionId
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Upload failed');
+            }
+
+            const data = await response.json();
+            if (data.status === 'success' && data.data && data.data.url) {
+                return data.data.url;
+            }
+            throw new Error('Invalid upload response');
+        }
+
+        async function enhanceImage(imageUrl) {
+            const apiUrl = `https://image-enhancer-sigma-pearl.vercel.app/enhance?url=${encodeURIComponent(imageUrl)}`;
+
+            const response = await fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'User-Agent': navigator.userAgent,
+                    'X-Session-Id': sessionId,
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Enhancement API failed');
+            }
+
+            const data = await response.json();
+            if (data.success && data.image) {
+                return data.image;
+            }
+            throw new Error('Enhancement failed');
+        }
+
+        async function upscaleImage(imageUrl) {
+            try {
+                const apiUrl = `https://image-enhance.apis-bj-devs.workers.dev/?imageurl=${encodeURIComponent(imageUrl)}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'User-Agent': navigator.userAgent,
+                        'X-Session-Id': sessionId,
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    return null; // Fallback to enhanced only
+                }
+
+                const data = await response.json();
+                if (data.status === 'success' && data.download_url) {
+                    return data.download_url;
+                }
+                return null;
+            } catch (error) {
+                console.warn('Upscale API failed, using enhanced result');
+                return null;
+            }
+        }
+
+        function showError(message) {
+            errorMsg.textContent = message;
+            errorMsg.classList.add('show');
+            successMsg.classList.remove('show');
+        }
+
+        // ============ FAQ ACCORDION ============
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const isOpen = faqItem.classList.contains('open');
+
+                // Close all FAQs
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('open');
+                });
+
+                // Open clicked FAQ if it wasn't open
+                if (!isOpen) {
+                    faqItem.classList.add('open');
+                }
+            });
+        });
+
+        // ============ SMOOTH SCROLL FOR NAV LINKS ============
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const target = document.querySelector(targetId);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Close mobile menu
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // ============ INITIALIZATION ============
+        console.log('PixelRevive AI initialized'); // Won't log due to console override
+    </script>
+</body>
+</html>
