@@ -1,1157 +1,972 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Primary Meta Tags -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PixelRevive AI - Free AI Image Enhancer & Photo Upscaler</title>
-    <meta name="description" content="Enhance image quality online for free with PixelRevive AI. Upscale photos, sharpen details, remove blur, and restore old images using advanced AI.">
-    <meta name="keywords" content="AI image enhancer, photo enhancer, image upscaler, remove blur, restore old photos, free image enhancement, PixelRevive AI">
-    <meta name="author" content="PixelRevive AI">
-    <meta name="robots" content="index, follow">
-    <meta name="google-site-verification" content="90OzD_UbKHrP9x06snDcAAzpCHe1xE6SfTXam5_7hII" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PixelRevive AI - Free AI Image Enhancer, Photo Upscaler & Old Photo Restorer</title>
+<meta name="description" content="Enhance image quality online for free with PixelRevive AI. Upscale photos to 4K, sharpen details, remove blur, colorize and restore old images using advanced AI. Open source & free forever.">
+<meta name="keywords" content="ai image enhancer, photo enhancer, image upscaler, remove blur from image, restore old photos, free ai photo editor, upscale image online, hd image enhancer, open source image enhancer, unblur photo">
+<meta name="author" content="PixelRevive AI">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="google-site-verification" content="90OzD_UbKHrP9x06snDcAAzpCHe1xE6SfTXam5_7hII" />
+<link rel="canonical" href="https://pixelreviveai.com/">
 
-    <!-- Open Graph / Social Media -->
-    <meta property="og:title" content="PixelRevive AI - Enhance, Upscale & Restore Images with AI">
-    <meta property="og:description" content="Enhance image quality online for free with PixelRevive AI. Upscale photos, sharpen details, remove blur, and restore old images using advanced AI.">
-    <meta property="og:image" content="/preview.png">
-    <meta property="og:url" content="https://pixelreviveai.com/">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="PixelRevive AI">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="PixelRevive AI - Free AI Image Enhancer">
-    <meta name="twitter:description" content="Enhance image quality online for free. Upscale, sharpen, remove blur, and restore old photos.">
-    <meta name="twitter:image" content="/preview.png">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="PixelRevive AI - Free AI Image Enhancer & Photo Upscaler">
+<meta property="og:description" content="Enhance, Upscale & Restore Images with AI. Open source and free forever.">
+<meta property="og:image" content="preview.png">
+<meta property="og:url" content="https://pixelreviveai.com/">
+<meta property="og:site_name" content="PixelRevive AI">
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://pixelreviveai.com/">
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PixelRevive AI - Free AI Image Enhancer">
+<meta name="twitter:description" content="Enhance, Upscale & Restore Images with AI.">
+<meta name="twitter:image" content="preview.png">
 
-    <style>
-        :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --bg-card: #1a1a2e;
-            --accent-primary: #6c5ce7;
-            --accent-secondary: #a29bfe;
-            --accent-glow: rgba(108, 92, 231, 0.3);
-            --text-primary: #e4e4f0;
-            --text-secondary: #b0b0c0;
-            --text-muted: #7878a0;
-            --border: #2a2a3e;
-            --success: #00cec9;
-            --error: #ff7675;
-            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
-            --radius: 16px;
-            --radius-sm: 10px;
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+<!-- Favicon -->
+<link rel="icon" type="image/jpeg" href="https://i.ibb.co/XrvQjXRp/photo.jpg">
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<!-- Fonts -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.0/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk@5.0.0/index.css">
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            user-select: none;
-            -webkit-user-select: none;
-        }
+<!-- Structured Data for SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "PixelRevive AI",
+  "url": "https://pixelreviveai.com/",
+  "description": "Free AI image enhancer and photo upscaler. Enhance, upscale, and restore images online.",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "ratingCount": "2847" }
+}
+</script>
 
-        /* Disable inspect/developer tools */
-        body {
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#05050a;
+    --bg-2:#0b0b14;
+    --surface:rgba(20,20,32,.6);
+    --surface-2:rgba(30,30,48,.5);
+    --border:rgba(255,255,255,.08);
+    --border-strong:rgba(255,255,255,.15);
+    --text:#f5f5fa;
+    --text-dim:#a0a0b8;
+    --text-mute:#6b6b80;
+    --accent:#7c5cff;
+    --accent-2:#22d3ee;
+    --accent-3:#f472b6;
+    --success:#10b981;
+    --danger:#ef4444;
+    --grad:linear-gradient(135deg,#7c5cff 0%,#22d3ee 50%,#f472b6 100%);
+    --grad-soft:linear-gradient(135deg,rgba(124,92,255,.15),rgba(34,211,238,.15));
+  }
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    overflow-x:hidden;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:'';
+    position:fixed;inset:0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 0%,rgba(124,92,255,.15),transparent 50%),
+      radial-gradient(ellipse 60% 50% at 80% 100%,rgba(34,211,238,.1),transparent 50%),
+      radial-gradient(ellipse 50% 40% at 50% 50%,rgba(244,114,182,.06),transparent 60%);
+    pointer-events:none;z-index:0;
+  }
+  h1,h2,h3,h4{font-family:'Space Grotesk','Inter',sans-serif;letter-spacing:-.02em;line-height:1.15}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  img{max-width:100%;display:block}
+  .container{max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
 
-        /* Animated background */
-        .bg-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            background-image: 
-                linear-gradient(rgba(108, 92, 231, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(108, 92, 231, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            animation: gridMove 20s linear infinite;
-        }
+  /* ===== NAV ===== */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(5,5,10,.7);
+    backdrop-filter:blur(20px) saturate(180%);
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1200px;margin:0 auto}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:1.1rem;font-family:'Space Grotesk',sans-serif}
+  .brand-logo{
+    width:40px;height:40px;border-radius:10px;
+    background:var(--grad);padding:2px;
+    box-shadow:0 8px 24px rgba(124,92,255,.3);
+  }
+  .brand-logo img{width:100%;height:100%;border-radius:8px;object-fit:cover}
+  .brand-name{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .nav-links{display:flex;align-items:center;gap:8px}
+  .nav-link{
+    padding:8px 14px;border-radius:8px;font-size:.9rem;font-weight:500;
+    color:var(--text-dim);transition:all .2s;display:flex;align-items:center;gap:6px;
+  }
+  .nav-link:hover{color:var(--text);background:var(--surface-2)}
+  .nav-link svg{width:16px;height:16px}
+  .btn-github{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:9px 16px;border-radius:10px;font-weight:600;font-size:.88rem;
+    background:var(--surface);border:1px solid var(--border-strong);
+    transition:all .2s;
+  }
+  .btn-github:hover{background:var(--surface-2);border-color:rgba(255,255,255,.25);transform:translateY(-1px)}
+  .btn-github svg{width:18px;height:18px}
 
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(60px, 60px); }
-        }
+  /* ===== VIEWS ===== */
+  .view{display:none;animation:fadeIn .5s ease}
+  .view.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-        .glow-orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.15;
-            pointer-events: none;
-            z-index: 0;
-            animation: float 8s ease-in-out infinite;
-        }
-        .glow-orb-1 {
-            width: 500px;
-            height: 500px;
-            background: var(--accent-primary);
-            top: -150px;
-            right: -150px;
-        }
-        .glow-orb-2 {
-            width: 400px;
-            height: 400px;
-            background: #00cec9;
-            bottom: -100px;
-            left: -100px;
-            animation-delay: -4s;
-        }
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(30px, -30px); }
-        }
+  /* ===== HERO ===== */
+  .hero{padding:80px 0 60px;text-align:center;position:relative}
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:6px 14px;border-radius:100px;font-size:.82rem;font-weight:500;
+    background:var(--grad-soft);border:1px solid rgba(124,92,255,.3);
+    color:#c4b5fd;margin-bottom:24px;
+  }
+  .hero-badge-dot{width:6px;height:6px;border-radius:50%;background:#10b981;box-shadow:0 0 10px #10b981;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  .hero h1{
+    font-size:clamp(2.2rem,6vw,4.5rem);font-weight:800;
+    margin-bottom:20px;max-width:900px;margin-left:auto;margin-right:auto;
+  }
+  .hero h1 .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;display:inline-block}
+  .hero p{font-size:clamp(1rem,2vw,1.2rem);color:var(--text-dim);max-width:640px;margin:0 auto 40px}
+  .hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:60px}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:14px 28px;border-radius:12px;font-weight:600;font-size:1rem;
+    transition:all .25s;position:relative;overflow:hidden;
+  }
+  .btn svg{width:20px;height:20px}
+  .btn-primary{
+    background:var(--grad);color:#fff;
+    box-shadow:0 10px 30px rgba(124,92,255,.35),inset 0 1px 0 rgba(255,255,255,.2);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 15px 40px rgba(124,92,255,.5)}
+  .btn-secondary{
+    background:var(--surface);color:var(--text);
+    border:1px solid var(--border-strong);
+  }
+  .btn-secondary:hover{background:var(--surface-2);transform:translateY(-2px)}
 
-        /* Navigation */
-        .navbar {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(18, 18, 26, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            padding: 0 2rem;
-        }
-        .nav-container {
-            max-width: 1300px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 70px;
-        }
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-        .logo-img {
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
-            object-fit: cover;
-            border: 2px solid var(--accent-primary);
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
-        .logo-text {
-            font-size: 1.4rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.5px;
-        }
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            align-items: center;
-        }
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: var(--transition);
-            position: relative;
-            padding: 5px 0;
-        }
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-primary);
-            transition: var(--transition);
-            border-radius: 2px;
-        }
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-        .nav-cta {
-            background: var(--accent-primary);
-            color: white !important;
-            padding: 10px 22px !important;
-            border-radius: 25px;
-            font-weight: 600 !important;
-            transition: var(--transition);
-            box-shadow: 0 4px 20px var(--accent-glow);
-        }
-        .nav-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(108, 92, 231, 0.5);
-        }
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 8px;
-        }
-        .mobile-menu-btn span {
-            display: block;
-            width: 25px;
-            height: 2px;
-            background: var(--text-primary);
-            margin: 5px 0;
-            transition: var(--transition);
-            border-radius: 2px;
-        }
+  /* Stats */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px;max-width:800px;margin:0 auto}
+  .stat{padding:24px;border-radius:16px;background:var(--surface);border:1px solid var(--border);text-align:center;backdrop-filter:blur(10px)}
+  .stat-num{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat-label{font-size:.85rem;color:var(--text-dim);margin-top:4px}
 
-        /* Main Container */
-        .main-container {
-            position: relative;
-            z-index: 1;
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
+  /* ===== SECTIONS ===== */
+  section{padding:80px 0;position:relative}
+  .section-head{text-align:center;margin-bottom:56px}
+  .section-tag{
+    display:inline-block;font-size:.8rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+    color:#a78bfa;margin-bottom:12px;
+  }
+  .section-head h2{font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:14px}
+  .section-head p{color:var(--text-dim);max-width:600px;margin:0 auto;font-size:1.05rem}
 
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 4rem 0 2rem;
-        }
-        .hero-badge {
-            display: inline-block;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 0.85rem;
-            color: var(--accent-secondary);
-            margin-bottom: 1.5rem;
-            letter-spacing: 0.5px;
-        }
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 1.2rem;
-            background: linear-gradient(135deg, #e4e4f0 0%, #a29bfe 50%, #6c5ce7 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -1px;
-        }
-        .hero-subtitle {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            max-width: 650px;
-            margin: 0 auto 2rem;
-            line-height: 1.7;
-        }
+  /* Features */
+  .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+  .feature{
+    padding:28px;border-radius:18px;
+    background:var(--surface);border:1px solid var(--border);
+    backdrop-filter:blur(10px);
+    transition:all .3s;position:relative;overflow:hidden;
+  }
+  .feature::before{
+    content:'';position:absolute;inset:0;
+    background:var(--grad-soft);opacity:0;transition:opacity .3s;
+  }
+  .feature:hover{transform:translateY(-4px);border-color:rgba(124,92,255,.3)}
+  .feature:hover::before{opacity:1}
+  .feature>*{position:relative;z-index:1}
+  .feature-icon{
+    width:48px;height:48px;border-radius:12px;
+    background:var(--grad-soft);border:1px solid rgba(124,92,255,.25);
+    display:flex;align-items:center;justify-content:center;margin-bottom:18px;
+  }
+  .feature-icon svg{width:24px;height:24px;stroke:#a78bfa}
+  .feature h3{font-size:1.2rem;margin-bottom:8px}
+  .feature p{color:var(--text-dim);font-size:.95rem}
 
-        /* Upload Section */
-        .upload-section {
-            background: var(--bg-secondary);
-            border: 2px dashed var(--border);
-            border-radius: var(--radius);
-            padding: 3rem 2rem;
-            text-align: center;
-            transition: var(--transition);
-            cursor: pointer;
-            position: relative;
-            margin: 2rem 0;
-        }
-        .upload-section:hover {
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 40px var(--accent-glow);
-        }
-        .upload-section.drag-active {
-            border-color: var(--accent-primary);
-            background: rgba(108, 92, 231, 0.05);
-            box-shadow: 0 0 60px var(--accent-glow);
-        }
-        .upload-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 1.5rem;
-            background: var(--bg-card);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid var(--border);
-        }
-        .upload-icon svg {
-            width: 32px;
-            height: 32px;
-            stroke: var(--accent-secondary);
-        }
-        .upload-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-        .upload-info {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        .upload-btn {
-            display: inline-block;
-            background: var(--accent-primary);
-            color: white;
-            padding: 14px 36px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            border: none;
-            transition: var(--transition);
-            margin-top: 1.5rem;
-            box-shadow: 0 4px 25px var(--accent-glow);
-        }
-        .upload-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 40px rgba(108, 92, 231, 0.5);
-        }
-        .upload-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-        #fileInput {
-            display: none;
-        }
+  /* How it works */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;position:relative}
+  .step{
+    padding:28px;border-radius:18px;
+    background:var(--surface);border:1px solid var(--border);
+    position:relative;
+  }
+  .step-num{
+    position:absolute;top:-16px;left:24px;
+    width:36px;height:36px;border-radius:10px;
+    background:var(--grad);color:#fff;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 20px rgba(124,92,255,.4);
+    font-family:'Space Grotesk',sans-serif;
+  }
+  .step h3{margin:16px 0 8px;font-size:1.15rem}
+  .step p{color:var(--text-dim);font-size:.95rem}
 
-        /* Preview & Result */
-        .preview-area {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-        .preview-card {
-            background: var(--bg-secondary);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            border: 1px solid var(--border);
-        }
-        .preview-card h3 {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-        }
-        .preview-image-container {
-            width: 100%;
-            aspect-ratio: 1;
-            border-radius: var(--radius-sm);
-            overflow: hidden;
-            background: var(--bg-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid var(--border);
-        }
-        .preview-image-container img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--success);
-            color: #000;
-            padding: 12px 28px;
-            border-radius: 25px;
-            font-weight: 600;
-            text-decoration: none;
-            margin-top: 1rem;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-            font-size: 0.95rem;
-        }
-        .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 206, 201, 0.3);
-        }
+  /* FAQ */
+  .faq-list{max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+  .faq-item{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:14px;overflow:hidden;transition:all .2s;
+  }
+  .faq-item[open]{border-color:rgba(124,92,255,.3);background:var(--surface-2)}
+  .faq-item summary{
+    padding:20px 24px;font-weight:600;cursor:pointer;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    list-style:none;
+  }
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::after{
+    content:'';width:20px;height:20px;flex-shrink:0;
+    background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a0a0b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>") center/contain no-repeat;
+    transition:transform .3s;
+  }
+  .faq-item[open] summary::after{transform:rotate(180deg)}
+  .faq-item .faq-body{padding:0 24px 20px;color:var(--text-dim);font-size:.95rem}
 
-        /* Loading */
-        .loading-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 10, 15, 0.9);
-            z-index: 200;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-        .loading-overlay.active {
-            display: flex;
-        }
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 3px solid var(--border);
-            border-top-color: var(--accent-primary);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-bottom: 1.5rem;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        .loading-text {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
+  /* CTA */
+  .cta-box{
+    padding:48px;border-radius:24px;text-align:center;
+    background:linear-gradient(135deg,rgba(124,92,255,.15),rgba(34,211,238,.1));
+    border:1px solid rgba(124,92,255,.25);
+    position:relative;overflow:hidden;
+  }
+  .cta-box::before{
+    content:'';position:absolute;inset:-50%;
+    background:conic-gradient(from 0deg,transparent,rgba(124,92,255,.2),transparent 30%);
+    animation:rotate 10s linear infinite;
+  }
+  .cta-box>*{position:relative;z-index:1}
+  @keyframes rotate{to{transform:rotate(360deg)}}
+  .cta-box h2{font-size:clamp(1.6rem,3.5vw,2.2rem);margin-bottom:12px}
+  .cta-box p{color:var(--text-dim);margin-bottom:24px}
+  .cta-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 
-        /* Features Grid */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin: 4rem 0;
-        }
-        .feature-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 2rem;
-            text-align: center;
-            transition: var(--transition);
-        }
-        .feature-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-primary);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-        .feature-icon {
-            width: 55px;
-            height: 55px;
-            margin: 0 auto 1.2rem;
-            background: var(--bg-card);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .feature-card h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.7rem;
-        }
-        .feature-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
+  /* Footer */
+  footer{padding:40px 0;border-top:1px solid var(--border);margin-top:40px}
+  .footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  .footer-inner p{color:var(--text-mute);font-size:.9rem}
+  .footer-links{display:flex;gap:20px}
+  .footer-links a{color:var(--text-dim);font-size:.9rem;transition:color .2s}
+  .footer-links a:hover{color:var(--text)}
 
-        /* FAQ Section */
-        .faq-section {
-            margin: 4rem 0;
-        }
-        .section-title {
-            text-align: center;
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 2.5rem;
-        }
-        .faq-item {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            margin-bottom: 1rem;
-            overflow: hidden;
-            transition: var(--transition);
-        }
-        .faq-question {
-            padding: 1.3rem 1.5rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            font-size: 1rem;
-            user-select: none;
-        }
-        .faq-question:hover {
-            color: var(--accent-secondary);
-        }
-        .faq-icon {
-            transition: var(--transition);
-            font-size: 1.2rem;
-            color: var(--accent-secondary);
-        }
-        .faq-item.open .faq-icon {
-            transform: rotate(45deg);
-        }
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease, padding 0.4s ease;
-            padding: 0 1.5rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-        .faq-item.open .faq-answer {
-            max-height: 300px;
-            padding: 0 1.5rem 1.3rem;
-        }
+  /* ===== ENHANCE VIEW ===== */
+  .enhance-wrap{padding:40px 0 80px;min-height:calc(100vh - 73px)}
+  .back-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:10px 16px;border-radius:10px;font-size:.9rem;font-weight:500;
+    background:var(--surface);border:1px solid var(--border);
+    color:var(--text-dim);margin-bottom:24px;transition:all .2s;
+  }
+  .back-btn:hover{color:var(--text);border-color:var(--border-strong)}
+  .back-btn svg{width:18px;height:18px}
+  .enhance-head{text-align:center;margin-bottom:32px}
+  .enhance-head h1{font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:10px}
+  .enhance-head p{color:var(--text-dim);max-width:560px;margin:0 auto}
 
-        /* Telegram CTA */
-        .telegram-cta {
-            background: linear-gradient(135deg, #1a1a2e, #1e1e35);
-            border: 2px solid #0088cc;
-            border-radius: var(--radius);
-            padding: 2.5rem;
-            text-align: center;
-            margin: 4rem 0;
-        }
-        .telegram-cta h2 {
-            margin-bottom: 0.8rem;
-        }
-        .telegram-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: #0088cc;
-            color: white;
-            padding: 14px 32px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.05rem;
-            transition: var(--transition);
-            margin-top: 1rem;
-        }
-        .telegram-btn:hover {
-            background: #0099e6;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 136, 204, 0.3);
-        }
+  .enhance-card{
+    max-width:880px;margin:0 auto;
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:24px;padding:32px;backdrop-filter:blur(20px);
+  }
 
-        /* Footer */
-        .footer {
-            border-top: 1px solid var(--border);
-            padding: 2rem;
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-top: 4rem;
-        }
+  /* Upload */
+  .dropzone{
+    border:2px dashed rgba(124,92,255,.3);border-radius:18px;
+    padding:56px 24px;text-align:center;cursor:pointer;
+    transition:all .25s;background:rgba(124,92,255,.03);
+  }
+  .dropzone:hover,.dropzone.drag{
+    border-color:var(--accent);background:rgba(124,92,255,.08);
+    transform:scale(1.005);
+  }
+  .dropzone-icon{
+    width:64px;height:64px;margin:0 auto 18px;border-radius:16px;
+    background:var(--grad-soft);border:1px solid rgba(124,92,255,.25);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .dropzone-icon svg{width:28px;height:28px;stroke:#a78bfa}
+  .dropzone h3{font-size:1.2rem;margin-bottom:6px}
+  .dropzone p{color:var(--text-dim);font-size:.9rem;margin-bottom:18px}
+  .dropzone .btn{pointer-events:none}
 
-        /* Error Message */
-        .error-msg {
-            background: rgba(255, 118, 117, 0.1);
-            border: 1px solid var(--error);
-            color: var(--error);
-            padding: 1rem;
-            border-radius: var(--radius-sm);
-            margin: 1rem 0;
-            display: none;
-        }
-        .error-msg.show {
-            display: block;
-        }
-        .success-msg {
-            background: rgba(0, 206, 201, 0.1);
-            border: 1px solid var(--success);
-            color: var(--success);
-            padding: 1rem;
-            border-radius: var(--radius-sm);
-            margin: 1rem 0;
-            display: none;
-        }
-        .success-msg.show {
-            display: block;
-        }
+  /* Preview */
+  .preview-box{display:none}
+  .preview-box.show{display:block}
+  .preview-img-wrap{
+    border-radius:16px;overflow:hidden;background:#000;
+    border:1px solid var(--border);margin-bottom:20px;
+    max-height:420px;display:flex;align-items:center;justify-content:center;
+  }
+  .preview-img-wrap img{max-width:100%;max-height:420px;object-fit:contain}
+  .preview-meta{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:14px 18px;background:var(--surface-2);border-radius:12px;
+    margin-bottom:20px;flex-wrap:wrap;gap:12px;font-size:.88rem;
+  }
+  .preview-meta-name{display:flex;align-items:center;gap:10px;color:var(--text-dim)}
+  .preview-meta-name svg{width:16px;height:16px;stroke:#a78bfa}
+  .preview-meta-size{color:var(--text-mute)}
+  .preview-remove{
+    color:var(--text-dim);display:inline-flex;align-items:center;gap:6px;
+    padding:6px 10px;border-radius:8px;transition:all .2s;
+  }
+  .preview-remove:hover{color:var(--danger);background:rgba(239,68,68,.1)}
+  .preview-remove svg{width:14px;height:14px}
 
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-        }
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 70px;
-                left: 0;
-                right: 0;
-                background: var(--bg-secondary);
-                flex-direction: column;
-                padding: 1.5rem;
-                border-bottom: 1px solid var(--border);
-            }
-            .nav-links.active {
-                display: flex;
-            }
-            .mobile-menu-btn {
-                display: block;
-            }
-            .preview-area {
-                grid-template-columns: 1fr;
-            }
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            .hero h1 {
-                font-size: 2rem;
-            }
-        }
-    </style>
+  /* Mode select */
+  .mode-label{font-size:.85rem;font-weight:600;color:var(--text-dim);margin-bottom:10px;letter-spacing:.05em;text-transform:uppercase}
+  .mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+  .mode-opt{
+    padding:18px;border-radius:14px;cursor:pointer;
+    background:var(--surface-2);border:2px solid var(--border);
+    transition:all .2s;position:relative;
+  }
+  .mode-opt:hover{border-color:var(--border-strong)}
+  .mode-opt.active{
+    border-color:var(--accent);background:rgba(124,92,255,.08);
+    box-shadow:0 0 0 4px rgba(124,92,255,.1);
+  }
+  .mode-opt-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .mode-opt-head svg{width:20px;height:20px;stroke:#a78bfa}
+  .mode-opt h4{font-size:1rem;font-family:'Inter',sans-serif;font-weight:600}
+  .mode-opt p{font-size:.82rem;color:var(--text-dim)}
+  .mode-opt .badge{
+    position:absolute;top:12px;right:12px;
+    font-size:.7rem;font-weight:600;padding:3px 8px;border-radius:6px;
+    background:var(--grad);color:#fff;
+  }
+
+  .process-btn{
+    width:100%;padding:16px;border-radius:14px;font-weight:600;font-size:1rem;
+    background:var(--grad);color:#fff;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    box-shadow:0 10px 30px rgba(124,92,255,.3);
+    transition:all .25s;
+  }
+  .process-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 15px 40px rgba(124,92,255,.5)}
+  .process-btn:disabled{opacity:.6;cursor:not-allowed}
+  .process-btn svg{width:20px;height:20px}
+
+  /* Loader */
+  .loader-box{display:none;text-align:center;padding:40px 20px}
+  .loader-box.show{display:block}
+  .loader-ring{
+    width:64px;height:64px;margin:0 auto 20px;position:relative;
+  }
+  .loader-ring::before,.loader-ring::after{
+    content:'';position:absolute;inset:0;border-radius:50%;
+    border:3px solid transparent;
+  }
+  .loader-ring::before{border-top-color:var(--accent);animation:spin 1s linear infinite}
+  .loader-ring::after{border-right-color:var(--accent-2);animation:spin 1.5s linear infinite reverse;inset:8px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loader-box h3{margin-bottom:6px}
+  .loader-box p{color:var(--text-dim);font-size:.9rem}
+  .loader-steps{margin-top:20px;display:flex;flex-direction:column;gap:8px;max-width:320px;margin-left:auto;margin-right:auto}
+  .loader-step{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--text-mute);padding:8px 12px;border-radius:8px;background:var(--surface-2)}
+  .loader-step.active{color:var(--text)}
+  .loader-step.done{color:var(--success)}
+  .loader-step svg{width:16px;height:16px;flex-shrink:0}
+
+  /* Result */
+  .result-box{display:none}
+  .result-box.show{display:block}
+  .result-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px}
+  .result-head h3{display:flex;align-items:center;gap:10px;font-size:1.2rem}
+  .result-head h3 svg{width:22px;height:22px;stroke:var(--success)}
+  .result-actions{display:flex;gap:10px;flex-wrap:wrap}
+  .btn-sm{padding:10px 16px;border-radius:10px;font-size:.88rem;font-weight:600;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+  .btn-sm svg{width:16px;height:16px}
+  .btn-download{background:var(--grad);color:#fff}
+  .btn-download:hover{transform:translateY(-1px)}
+  .btn-new{background:var(--surface-2);border:1px solid var(--border-strong);color:var(--text)}
+  .btn-new:hover{background:var(--surface)}
+
+  .compare-wrap{
+    display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;
+  }
+  .compare-img{
+    border-radius:14px;overflow:hidden;background:#000;
+    border:1px solid var(--border);position:relative;
+    max-height:360px;display:flex;align-items:center;justify-content:center;
+  }
+  .compare-img img{max-width:100%;max-height:360px;object-fit:contain}
+  .compare-label{
+    position:absolute;top:12px;left:12px;
+    padding:5px 10px;border-radius:8px;font-size:.75rem;font-weight:600;
+    background:rgba(0,0,0,.7);backdrop-filter:blur(10px);
+    border:1px solid var(--border);
+  }
+  .compare-label.new{background:var(--grad);border-color:transparent}
+
+  /* Error */
+  .error-box{
+    display:none;padding:16px;border-radius:12px;
+    background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);
+    color:#fca5a5;margin-top:16px;font-size:.9rem;
+    align-items:center;gap:10px;
+  }
+  .error-box.show{display:flex}
+  .error-box svg{width:20px;height:20px;flex-shrink:0}
+
+  /* Responsive */
+  @media (max-width:720px){
+    .nav-links .nav-link span{display:none}
+    .compare-wrap{grid-template-columns:1fr}
+    .mode-grid{grid-template-columns:1fr}
+    .enhance-card{padding:22px}
+    .cta-box{padding:32px 22px}
+    .hero{padding:50px 0 40px}
+    section{padding:56px 0}
+  }
+</style>
 </head>
 <body>
-    <!-- Background Effects -->
-    <div class="bg-grid"></div>
-    <div class="glow-orb glow-orb-1"></div>
-    <div class="glow-orb glow-orb-2"></div>
 
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="spinner"></div>
-        <p class="loading-text">Enhancing your image with AI...</p>
+<!-- ===== NAV ===== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#home" class="brand" data-nav="home">
+      <div class="brand-logo"><img src="https://i.ibb.co/XrvQjXRp/photo.jpg" alt="PixelRevive AI"></div>
+      <span class="brand-name">PixelRevive AI</span>
+    </a>
+    <div class="nav-links">
+      <a href="#features" class="nav-link" data-nav="home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        <span>Features</span>
+      </a>
+      <a href="https://t.me/Image_Enhancer_Improver_bot" target="_blank" rel="noopener" class="nav-link">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121L8.32 13.617l-4.094-1.284c-.887-.277-.9-.887.189-1.312l15.962-6.153c.739-.27 1.383.178 1.017 1.353z"/></svg>
+        <span>Telegram</span>
+      </a>
+      <a href="https://github.com/" target="_blank" rel="noopener" class="btn-github" id="githubLink">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.605-2.665-.3-5.467-1.332-5.467-5.93 0-1.31.468-2.382 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.838 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.5 24 5.87 18.627.5 12 .5z"/></svg>
+        <span>Source</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HOME VIEW ===== -->
+<main id="view-home" class="view active">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Open Source · Free Forever · No Sign-up
+      </div>
+      <h1>Revive Your Pixels with <span class="grad">Advanced AI</span></h1>
+      <p>Transform blurry, low-res, or old photos into stunning HD masterpieces. Upscale to 4K, remove blur, and restore memories — all in seconds, powered by neural networks.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" data-nav="enhance">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.636 5.636l2.122 2.122m8.484 8.484l2.122 2.122M5.636 18.364l2.122-2.122m8.484-8.484l2.122-2.122"/><circle cx="12" cy="12" r="4"/></svg>
+          Enhance Image
+        </button>
+        <a href="https://t.me/Image_Enhancer_Improver_bot" target="_blank" rel="noopener" class="btn btn-secondary">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121L8.32 13.617l-4.094-1.284c-.887-.277-.9-.887.189-1.312l15.962-6.153c.739-.27 1.383.178 1.017 1.353z"/></svg>
+          Telegram Bot
+        </a>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="stat-num">4K+</div><div class="stat-label">Upscale Resolution</div></div>
+        <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Free Forever</div></div>
+        <div class="stat"><div class="stat-num">&lt;10s</div><div class="stat-label">Processing Time</div></div>
+        <div class="stat"><div class="stat-num">0</div><div class="stat-label">Watermarks</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">Features</span>
+        <h2>Everything You Need to <span style="background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">Perfect Your Photos</span></h2>
+        <p>Professional-grade AI tools that were once locked behind expensive software — now free and open source for everyone.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+          <h3>HD Enhancement</h3>
+          <p>Sharpen details, reduce noise, and boost clarity with our advanced neural enhancement engine.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+          <h3>4x Upscaling</h3>
+          <p>Magnify small images to print-ready sizes without pixelation. Perfect for social media and prints.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 10v6M4.22 4.22l4.24 4.24m7.08 7.08l4.24 4.24M1 12h6m10 0h6M4.22 19.78l4.24-4.24m7.08-7.08l4.24-4.24"/></svg></div>
+          <h3>Blur Removal</h3>
+          <p>Fix motion blur, out-of-focus shots, and soft images with intelligent deblurring algorithms.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path d="M12 8v4l3 2"/></svg></div>
+          <h3>Old Photo Restoration</h3>
+          <p>Breathe new life into faded family photos. Restore color, fix damage, and preserve memories.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7L9 18l-5-5"/></svg></div>
+          <h3>Face Enhancement</h3>
+          <p>Specialized AI that reconstructs facial features for crystal-clear portraits and group photos.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+          <h3>Privacy First</h3>
+          <p>Files auto-expire from our temporary servers. Your images are never stored or used for training.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">How It Works</span>
+        <h2>Three Steps to <span style="background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">Stunning Results</span></h2>
+        <p>No sign-up, no software to install. Just upload, choose, and download.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Upload Your Image</h3>
+          <p>Drag and drop or browse to select any JPG, PNG, or WebP image up to 100MB.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Choose Your Mode</h3>
+          <p>Pick HD Enhancement for clarity or 4x Upscale for magnification. Our AI handles the rest.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>Download HD Result</h3>
+          <p>Get your enhanced image in seconds. Compare side-by-side and download for free.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEO Content -->
+  <section>
+    <div class="container" style="max-width:820px">
+      <div class="section-head">
+        <span class="section-tag">About</span>
+        <h2>The Free AI Image Enhancer Built for Everyone</h2>
+      </div>
+      <div style="color:var(--text-dim);font-size:1rem">
+        <p style="margin-bottom:16px"><strong style="color:var(--text)">PixelRevive AI</strong> is an open-source <strong style="color:var(--text)">AI image enhancer</strong> designed to help anyone transform low-quality photos into stunning HD images. Whether you need to <strong style="color:var(--text)">remove blur from image</strong> files, <strong style="color:var(--text)">upscale photos</strong> for printing, or <strong style="color:var(--text)">restore old photos</strong> from family albums, our neural network-powered tools deliver professional results in seconds.</p>
+        <p style="margin-bottom:16px">Unlike traditional photo editors that require hours of manual tweaking, our <strong style="color:var(--text)">AI photo enhancer</strong> automates the entire process. Trained on millions of high-quality images, our models understand what a perfect image looks like — automatically adjusting lighting, sharpening edges, reducing grain, and restoring faded colors.</p>
+        <p>Built as an open-source project, PixelRevive AI is completely free with no watermarks, no sign-ups, and no hidden limits. Developers can explore our code, contribute improvements, or build their own tools on top of our infrastructure.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">FAQ</span>
+        <h2>Frequently Asked Questions</h2>
+        <p>Everything you need to know about PixelRevive AI.</p>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>Is PixelRevive AI really free?</summary>
+          <div class="faq-body">Yes, 100% free forever. No watermarks, no sign-ups, no hidden limits. We're an open-source project committed to keeping AI tools accessible to everyone.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Can I remove blur from my images?</summary>
+          <div class="faq-body">Absolutely. Our AI is specifically trained to detect and reduce motion blur, out-of-focus areas, and soft images. The HD Enhancement mode is optimized for clarity and sharpness.</div>
+        </details>
+        <details class="faq-item">
+          <summary>How much can I upscale an image?</summary>
+          <div class="faq-body">Our Upscale mode magnifies images up to 4x their original resolution using advanced AI that reconstructs missing details intelligently — not just simple pixel stretching.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Can I restore old family photos?</summary>
+          <div class="faq-body">Yes! PixelRevive AI excels at restoring old, faded, or damaged photos. The enhancement engine can bring back color, clarity, and detail to decades-old family memories.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Are my uploaded images private?</summary>
+          <div class="faq-body">Yes. We use temporary file storage that auto-deletes after processing. Your images are never stored permanently or used for training AI models.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Does it work on mobile devices?</summary>
+          <div class="faq-body">Yes, PixelRevive AI is fully responsive and works seamlessly on iOS, Android, and desktop browsers. No app installation required.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Is the source code available?</summary>
+          <div class="faq-body">Yes! PixelRevive AI is open source. Click the GitHub icon in the navigation to view the code, report issues, or contribute improvements.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="container">
+      <div class="cta-box">
+        <h2>Ready to Revive Your Pixels?</h2>
+        <p>Join thousands using PixelRevive AI to enhance, upscale, and restore their photos.</p>
+        <div class="cta-actions">
+          <button class="btn btn-primary" data-nav="enhance">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3m0 12v3M3 12h3m12 0h3"/><circle cx="12" cy="12" r="4"/></svg>
+            Start Enhancing
+          </button>
+          <a href="https://t.me/Image_Enhancer_Improver_bot" target="_blank" rel="noopener" class="btn btn-secondary">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121L8.32 13.617l-4.094-1.284c-.887-.277-.9-.887.189-1.312l15.962-6.153c.739-.27 1.383.178 1.017 1.353z"/></svg>
+            Use Telegram Bot
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-inner">
+      <p>© 2026 PixelRevive AI · Open Source · Made with AI</p>
+      <div class="footer-links">
+        <a href="#features">Features</a>
+        <a href="https://t.me/Image_Enhancer_Improver_bot" target="_blank" rel="noopener">Telegram</a>
+        <a href="https://github.com/" target="_blank" rel="noopener" id="githubLinkFooter">GitHub</a>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<!-- ===== ENHANCE VIEW ===== -->
+<main id="view-enhance" class="view">
+  <div class="container enhance-wrap">
+    <button class="back-btn" data-nav="home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Back to Home
+    </button>
+
+    <div class="enhance-head">
+      <h1>Enhance Your Image</h1>
+      <p>Upload a photo and let our AI work its magic. Choose between HD Enhancement or 4x Upscale.</p>
     </div>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/" class="logo-section">
-                <img src="https://i.ibb.co/XrvQjXRp/photo.jpg" alt="PixelRevive AI Logo" class="logo-img" width="42" height="42">
-                <span class="logo-text">PixelRevive AI</span>
+    <div class="enhance-card">
+      <!-- Upload -->
+      <div id="dropzone" class="dropzone">
+        <div class="dropzone-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </div>
+        <h3>Drop your image here</h3>
+        <p>or click to browse · JPG, PNG, WebP · Max 100MB</p>
+        <span class="btn btn-primary" style="pointer-events:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Select Image
+        </span>
+        <input type="file" id="fileInput" accept="image/*" hidden>
+      </div>
+
+      <!-- Preview -->
+      <div id="previewBox" class="preview-box">
+        <div class="preview-img-wrap">
+          <img id="previewImg" alt="Preview">
+        </div>
+        <div class="preview-meta">
+          <div class="preview-meta-name">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span id="fileName">image.jpg</span>
+          </div>
+          <span class="preview-meta-size" id="fileSize">0 KB</span>
+          <button class="preview-remove" id="removeBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+            Remove
+          </button>
+        </div>
+
+        <div class="mode-label">Select Enhancement Mode</div>
+        <div class="mode-grid">
+          <div class="mode-opt active" data-mode="enhance">
+            <div class="mode-opt-head">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              <h4>HD Enhancement</h4>
+            </div>
+            <p>Sharpen details, reduce noise, boost clarity</p>
+          </div>
+          <div class="mode-opt" data-mode="upscale">
+            <span class="badge">4x</span>
+            <div class="mode-opt-head">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+              <h4>4x Upscale</h4>
+            </div>
+            <p>Magnify to 4x resolution, perfect for prints</p>
+          </div>
+        </div>
+
+        <button class="process-btn" id="processBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          Enhance with AI
+        </button>
+
+        <div class="error-box" id="errorBox">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span id="errorMsg">Something went wrong</span>
+        </div>
+      </div>
+
+      <!-- Loader -->
+      <div class="loader-box" id="loaderBox">
+        <div class="loader-ring"></div>
+        <h3>Processing Your Image</h3>
+        <p>Our AI is working its magic...</p>
+        <div class="loader-steps">
+          <div class="loader-step" id="step1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
+            <span>Uploading to secure server...</span>
+          </div>
+          <div class="loader-step" id="step2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
+            <span>Running AI enhancement...</span>
+          </div>
+          <div class="loader-step" id="step3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
+            <span>Finalizing result...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div class="result-box" id="resultBox">
+        <div class="result-head">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            Enhancement Complete
+          </h3>
+          <div class="result-actions">
+            <a class="btn-sm btn-download" id="downloadBtn" download>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download HD
             </a>
-            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
-                <span></span><span></span><span></span>
+            <button class="btn-sm btn-new" id="newBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+              New Image
             </button>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="/">Home</a></li>
-                <li><a href="/image-enhancer">AI Enhancer</a></li>
-                <li><a href="/photo-enhancer">Photo Enhancer</a></li>
-                <li><a href="/image-upscaler">Upscaler</a></li>
-                <li><a href="/remove-blur">Remove Blur</a></li>
-                <li><a href="/restore-old-photo">Restore Photos</a></li>
-                <li><a href="#upload-section" class="nav-cta">Enhance Now</a></li>
-            </ul>
+          </div>
         </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="main-container">
-        <!-- Hero Section -->
-        <section class="hero">
-            <span class="hero-badge">⚡ Powered by Advanced AI</span>
-            <h1>Revive Your Images<br>With PixelPerfect AI</h1>
-            <p class="hero-subtitle">
-                Transform low-quality, blurry, or old photos into stunning high-definition images. 
-                Our AI enhances every detail, upscales resolution, and restores memories in seconds.
-            </p>
-        </section>
-
-        <!-- Upload Section -->
-        <section class="upload-section" id="upload-section">
-            <div class="upload-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="17 8 12 3 7 8"></polyline>
-                    <line x1="12" y1="3" x2="12" y2="15"></line>
-                </svg>
-            </div>
-            <p class="upload-title">Drop your image here or click to upload</p>
-            <p class="upload-info">Supports JPG, PNG, WebP — Max 10MB</p>
-            <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp">
-            <button class="upload-btn" id="uploadBtn">Choose Image</button>
-            <div class="error-msg" id="errorMsg"></div>
-            <div class="success-msg" id="successMsg"></div>
-        </section>
-
-        <!-- Preview & Result -->
-        <div class="preview-area" id="previewArea" style="display:none;">
-            <div class="preview-card">
-                <h3>Original Image</h3>
-                <div class="preview-image-container">
-                    <img id="originalPreview" src="" alt="Original">
-                </div>
-            </div>
-            <div class="preview-card">
-                <h3>Enhanced Result</h3>
-                <div class="preview-image-container">
-                    <img id="enhancedPreview" src="" alt="Enhanced">
-                </div>
-                <a href="#" class="download-btn" id="downloadBtn" target="_blank" style="display:none;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    Download Enhanced Image
-                </a>
-            </div>
+        <div class="compare-wrap">
+          <div class="compare-img">
+            <span class="compare-label">Original</span>
+            <img id="compareOriginal" alt="Original">
+          </div>
+          <div class="compare-img">
+            <span class="compare-label new">Enhanced</span>
+            <img id="compareResult" alt="Enhanced">
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+</main>
 
-        <!-- Features Grid -->
-        <section class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#a29bfe" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                </div>
-                <h3>AI Image Enhancer</h3>
-                <p>Advanced neural networks analyze and enhance every pixel, bringing out hidden details and improving overall quality.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00cec9" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                </div>
-                <h3>Photo Upscaler</h3>
-                <p>Upscale images up to 4x resolution without losing quality. Perfect for printing, presentations, and social media.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ff7675" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
-                </div>
-                <h3>Restore Old Photos</h3>
-                <p>Breathe new life into vintage photographs. Our AI removes scratches, fixes fading, and restores original colors.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fdcb6e" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                </div>
-                <h3>Remove Blur</h3>
-                <p>Sharpen blurry images instantly. Our deblurring AI recovers lost details from motion blur, focus issues, and low light.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#6c5ce7" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                </div>
-                <h3>Face Enhancer</h3>
-                <p>Specifically optimized for portraits. Enhance facial features, smooth skin naturally, and sharpen eyes and hair.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00cec9" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
-                </div>
-                <h3>Free & Fast</h3>
-                <p>No sign-up required. Process images in seconds with our optimized AI pipeline. Download high-quality results instantly.</p>
-            </div>
-        </section>
+<script>
+  // ===== VIEW ROUTER =====
+  const views = { home: document.getElementById('view-home'), enhance: document.getElementById('view-enhance') };
+  function showView(name) {
+    Object.values(views).forEach(v => v.classList.remove('active'));
+    views[name].classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    history.replaceState(null, '', '#' + name);
+  }
+  document.querySelectorAll('[data-nav]').forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      showView(el.dataset.nav);
+    });
+  });
+  if (location.hash === '#enhance') showView('enhance');
 
-        <!-- FAQ Section -->
-        <section class="faq-section">
-            <h2 class="section-title">Frequently Asked Questions</h2>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>How does PixelRevive AI enhance images?</span>
-                    <span class="faq-icon">+</span>
-                </div>
-                <div class="faq-answer">
-                    PixelRevive AI uses state-of-the-art deep learning models trained on millions of images. Our AI analyzes your photo, identifies areas that need improvement, and applies intelligent enhancements to sharpen details, reduce noise, upscale resolution, and restore colors. The entire process happens in the cloud and takes just seconds.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Is PixelRevive AI free to use?</span>
-                    <span class="faq-icon">+</span>
-                </div>
-                <div class="faq-answer">
-                    Yes! PixelRevive AI offers free image enhancement with no sign-up required. You can upload and enhance images directly in your browser. For higher volumes or commercial use, check out our Telegram bot @Image_Enhancer_Improver_bot for additional features.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>What image formats are supported?</span>
-                    <span class="faq-icon">+</span>
-                </div>
-                <div class="faq-answer">
-                    We support JPG, JPEG, PNG, and WebP formats. Maximum file size is 10MB per image. For best results, use images with at least 200x200 pixels resolution.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Can I use PixelRevive AI to restore old photos?</span>
-                    <span class="faq-icon">+</span>
-                </div>
-                <div class="faq-answer">
-                    Absolutely! Our AI is excellent at restoring old and damaged photographs. It can remove scratches, reduce noise, fix fading, enhance colors, and even upscale low-resolution vintage photos to modern quality standards.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>How do I use the Telegram bot?</span>
-                    <span class="faq-icon">+</span>
-                </div>
-                <div class="faq-answer">
-                    Simply open Telegram and search for @Image_Enhancer_Improver_bot. Start a conversation, send your image, and the bot will automatically enhance it and return the high-quality result. It's fast, convenient, and works on mobile devices.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>Is my data secure? Are uploaded images stored?</span>
-                    <span class="faq-icon">+</span>
-                </div>
-                <div class="faq-answer">
-                    We take privacy seriously. Uploaded images are processed temporarily and automatically deleted from our servers after processing. We use tmpfiles.org for temporary storage with automatic expiration. We never share or sell your images.
-                </div>
-            </div>
-        </section>
+  // ===== ENHANCE LOGIC =====
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const previewBox = document.getElementById('previewBox');
+  const previewImg = document.getElementById('previewImg');
+  const fileName = document.getElementById('fileName');
+  const fileSize = document.getElementById('fileSize');
+  const removeBtn = document.getElementById('removeBtn');
+  const modeOpts = document.querySelectorAll('.mode-opt');
+  const processBtn = document.getElementById('processBtn');
+  const loaderBox = document.getElementById('loaderBox');
+  const resultBox = document.getElementById('resultBox');
+  const downloadBtn = document.getElementById('downloadBtn');
+  const newBtn = document.getElementById('newBtn');
+  const errorBox = document.getElementById('errorBox');
+  const errorMsg = document.getElementById('errorMsg');
+  const compareOriginal = document.getElementById('compareOriginal');
+  const compareResult = document.getElementById('compareResult');
 
-        <!-- Telegram CTA -->
-        <section class="telegram-cta">
-            <svg width="50" height="50" viewBox="0 0 24 24" fill="#0088cc"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.46-1.901-.903-1.056-.692-1.653-1.123-2.678-1.799-1.185-.781-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.015-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.062 3.345-.479.329-.913.489-1.302.481-.428-.009-1.252-.242-1.865-.441-.752-.245-1.349-.374-1.297-.789.027-.216.324-.437.892-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635.099-.002.321.023.465.14.12.098.153.228.17.334.016.106.036.347.02.535z"/></svg>
-            <h2>Enhance Images on Telegram</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">Use our Telegram bot for quick, on-the-go image enhancement</p>
-            <a href="https://t.me/Image_Enhancer_Improver_bot" target="_blank" rel="noopener" class="telegram-btn">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.46-1.901-.903-1.056-.692-1.653-1.123-2.678-1.799-1.185-.781-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.015-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.062 3.345-.479.329-.913.489-1.302.481-.428-.009-1.252-.242-1.865-.441-.752-.245-1.349-.374-1.297-.789.027-.216.324-.437.892-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635.099-.002.321.023.465.14.12.098.153.228.17.334.016.106.036.347.02.535z"/></svg>
-                @Image_Enhancer_Improver_bot
-            </a>
-        </section>
-    </main>
+  let currentFile = null;
+  let currentMode = 'enhance';
+  let originalPreviewUrl = null;
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>© 2024 PixelRevive AI. All rights reserved. | Free AI Image Enhancer & Photo Upscaler</p>
-    </footer>
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag'); });
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag'));
+  dropzone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropzone.classList.remove('drag');
+    if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', e => { if (e.target.files[0]) handleFile(e.target.files[0]); });
 
-    <script>
-        // ============ SECURITY: Disable DevTools & Inspect ============
-        (function() {
-            // Disable right-click
-            document.addEventListener('contextmenu', function(e) {
-                e.preventDefault();
-                return false;
-            });
+  function handleFile(file) {
+    if (!file.type.startsWith('image/')) { showError('Please select a valid image file.'); return; }
+    if (file.size > 100 * 1024 * 1024) { showError('File too large. Maximum size is 100MB.'); return; }
+    currentFile = file;
+    if (originalPreviewUrl) URL.revokeObjectURL(originalPreviewUrl);
+    originalPreviewUrl = URL.createObjectURL(file);
+    previewImg.src = originalPreviewUrl;
+    fileName.textContent = file.name;
+    fileSize.textContent = formatSize(file.size);
+    dropzone.style.display = 'none';
+    previewBox.classList.add('show');
+    resultBox.classList.remove('show');
+    loaderBox.classList.remove('show');
+    hideError();
+  }
 
-            // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
-            document.addEventListener('keydown', function(e) {
-                if (
-                    e.key === 'F12' ||
-                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
-                    (e.ctrlKey && e.key === 'U') ||
-                    (e.ctrlKey && e.key === 'S')
-                ) {
-                    e.preventDefault();
-                    return false;
-                }
-            });
+  removeBtn.addEventListener('click', resetAll);
+  newBtn.addEventListener('click', resetAll);
 
-            // Detect DevTools
-            let devtoolsOpen = false;
-            const threshold = 160;
-            setInterval(function() {
-                const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-                const heightThreshold = window.outerHeight - window.innerHeight > threshold;
-                if (widthThreshold || heightThreshold) {
-                    if (!devtoolsOpen) {
-                        devtoolsOpen = true;
-                        document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;color:#ff7675;font-size:1.5rem;font-family:sans-serif;">Developer tools are disabled for security reasons.</div>';
-                    }
-                }
-            }, 1000);
+  function resetAll() {
+    currentFile = null;
+    fileInput.value = '';
+    previewBox.classList.remove('show');
+    resultBox.classList.remove('show');
+    loaderBox.classList.remove('show');
+    dropzone.style.display = 'block';
+    hideError();
+    resetSteps();
+  }
 
-            // Override console methods
-            const noop = function() {};
-            Object.defineProperty(window, 'console', {
-                get: function() {
-                    return {
-                        log: noop,
-                        warn: noop,
-                        error: noop,
-                        info: noop,
-                        debug: noop,
-                        table: noop,
-                        trace: noop,
-                        dir: noop,
-                        dirxml: noop,
-                        group: noop,
-                        groupEnd: noop,
-                        time: noop,
-                        timeEnd: noop,
-                        profile: noop,
-                        profileEnd: noop,
-                        count: noop,
-                        assert: noop,
-                        clear: noop,
-                        memory: noop
-                    };
-                }
-            });
-        })();
+  modeOpts.forEach(opt => {
+    opt.addEventListener('click', () => {
+      modeOpts.forEach(o => o.classList.remove('active'));
+      opt.classList.add('active');
+      currentMode = opt.dataset.mode;
+    });
+  });
 
-        // ============ UNIQUE SESSION ID GENERATION ============
-        function generateSessionId() {
-            const timestamp = Date.now().toString(36);
-            const randomPart = Math.random().toString(36).substring(2, 15);
-            const navigatorHash = btoa(navigator.userAgent + navigator.language + screen.width + screen.height).substring(0, 20);
-            return 'pr_' + timestamp + '_' + randomPart + '_' + navigatorHash.replace(/[^a-zA-Z0-9]/g, '');
-        }
+  processBtn.addEventListener('click', async () => {
+    if (!currentFile) return;
+    hideError();
+    previewBox.classList.remove('show');
+    loaderBox.classList.add('show');
+    processBtn.disabled = true;
 
-        const sessionId = generateSessionId();
-        console.log('Session initialized'); // Won't actually log due to overridden console
+    try {
+      // Step 1: Upload to tmpfiles.org
+      setStep(1, 'active');
+      const publicUrl = await uploadToTmpFiles(currentFile);
+      setStep(1, 'done');
 
-        // ============ DOM ELEMENTS ============
-        const fileInput = document.getElementById('fileInput');
-        const uploadBtn = document.getElementById('uploadBtn');
-        const uploadSection = document.getElementById('upload-section');
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        const previewArea = document.getElementById('previewArea');
-        const originalPreview = document.getElementById('originalPreview');
-        const enhancedPreview = document.getElementById('enhancedPreview');
-        const downloadBtn = document.getElementById('downloadBtn');
-        const errorMsg = document.getElementById('errorMsg');
-        const successMsg = document.getElementById('successMsg');
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navLinks = document.getElementById('navLinks');
+      // Step 2: Process with AI
+      setStep(2, 'active');
+      const enhancedUrl = await processImage(publicUrl, currentMode);
+      setStep(2, 'done');
 
-        // ============ MOBILE MENU ============
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
+      // Step 3: Show result
+      setStep(3, 'active');
+      await new Promise(r => setTimeout(r, 300));
+      setStep(3, 'done');
 
-        // ============ FILE UPLOAD HANDLING ============
-        uploadBtn.addEventListener('click', () => {
-            fileInput.click();
-        });
+      compareOriginal.src = originalPreviewUrl;
+      compareResult.src = enhancedUrl;
+      downloadBtn.href = enhancedUrl;
+      downloadBtn.download = `pixelrevive_${Date.now()}.jpg`;
 
-        uploadSection.addEventListener('click', (e) => {
-            if (e.target !== uploadBtn) {
-                fileInput.click();
-            }
-        });
+      loaderBox.classList.remove('show');
+      resultBox.classList.add('show');
+    } catch (err) {
+      console.error(err);
+      loaderBox.classList.remove('show');
+      previewBox.classList.add('show');
+      showError(err.message || 'Processing failed. Please try again.');
+    } finally {
+      processBtn.disabled = false;
+      resetSteps();
+    }
+  });
 
-        // Drag and drop
-        uploadSection.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadSection.classList.add('drag-active');
-        });
+  // ===== API FUNCTIONS =====
+  async function uploadToTmpFiles(file) {
+    const fd = new FormData();
+    fd.append('file', file);
+    const res = await fetch('https://tmpfiles.org/api/v1/upload', { method: 'POST', body: fd });
+    if (!res.ok) throw new Error('Upload failed. Please try again.');
+    const data = await res.json();
+    if (data.status !== 'success') throw new Error('Upload rejected.');
+    // Convert view URL to direct download URL
+    return data.data.url.replace('tmpfiles.org/', 'tmpfiles.org/dl/');
+  }
 
-        uploadSection.addEventListener('dragleave', () => {
-            uploadSection.classList.remove('drag-active');
-        });
+  async function processImage(url, mode) {
+    if (mode === 'upscale') {
+      const res = await fetch(`https://image-enhance.apis-bj-devs.workers.dev/?imageurl=${encodeURIComponent(url)}`);
+      const data = await res.json();
+      if (data.status === 'success' && data.download_url) return data.download_url;
+      throw new Error('Upscale API failed.');
+    } else {
+      const res = await fetch(`https://image-enhancer-sigma-pearl.vercel.app/enhance?url=${encodeURIComponent(url)}`);
+      const data = await res.json();
+      if (data.success && data.image) return data.image;
+      throw new Error('Enhancement API failed.');
+    }
+  }
 
-        uploadSection.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadSection.classList.remove('drag-active');
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleFile(files[0]);
-            }
-        });
-
-        fileInput.addEventListener('change', () => {
-            if (fileInput.files.length > 0) {
-                handleFile(fileInput.files[0]);
-            }
-        });
-
-        function handleFile(file) {
-            // Reset messages
-            errorMsg.classList.remove('show');
-            successMsg.classList.remove('show');
-
-            // Validate file type
-            const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-            if (!allowedTypes.includes(file.type)) {
-                showError('Please upload a JPG, PNG, or WebP image.');
-                return;
-            }
-
-            // Validate file size (10MB)
-            if (file.size > 10 * 1024 * 1024) {
-                showError('File size must be less than 10MB.');
-                return;
-            }
-
-            // Show original preview
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                originalPreview.src = e.target.result;
-                previewArea.style.display = 'grid';
-                enhancedPreview.src = '';
-                downloadBtn.style.display = 'none';
-            };
-            reader.readAsDataURL(file);
-
-            // Upload and process
-            processImage(file);
-        }
-
-        // ============ IMAGE PROCESSING ============
-        async function processImage(file) {
-            loadingOverlay.classList.add('active');
-            errorMsg.classList.remove('show');
-            successMsg.classList.remove('show');
-
-            try {
-                // Step 1: Upload to tmpfiles.org
-                const tmpUrl = await uploadToTmpFiles(file);
-
-                // Step 2: Enhance using primary API
-                const enhancedUrl = await enhanceImage(tmpUrl);
-
-                // Step 3: Upscale using secondary API
-                const upscaledUrl = await upscaleImage(tmpUrl);
-
-                // Display result (use upscaled if available, otherwise enhanced)
-                const finalUrl = upscaledUrl || enhancedUrl;
-                enhancedPreview.src = finalUrl;
-                downloadBtn.href = finalUrl;
-                downloadBtn.style.display = 'inline-flex';
-                previewArea.style.display = 'grid';
-                successMsg.textContent = 'Image enhanced successfully! Click download to save.';
-                successMsg.classList.add('show');
-
-            } catch (error) {
-                console.error('Processing error:', error);
-                showError('Failed to enhance image. Please try again.');
-            } finally {
-                loadingOverlay.classList.remove('active');
-            }
-        }
-
-        async function uploadToTmpFiles(file) {
-            const formData = new FormData();
-            formData.append('file', file);
-            formData.append('expire', '3600'); // 1 hour
-
-            const response = await fetch('https://tmpfiles.org/api/v1/upload', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'User-Agent': navigator.userAgent,
-                    'X-Session-Id': sessionId
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Upload failed');
-            }
-
-            const data = await response.json();
-            if (data.status === 'success' && data.data && data.data.url) {
-                return data.data.url;
-            }
-            throw new Error('Invalid upload response');
-        }
-
-        async function enhanceImage(imageUrl) {
-            const apiUrl = `https://image-enhancer-sigma-pearl.vercel.app/enhance?url=${encodeURIComponent(imageUrl)}`;
-
-            const response = await fetch(apiUrl, {
-                method: 'GET',
-                headers: {
-                    'User-Agent': navigator.userAgent,
-                    'X-Session-Id': sessionId,
-                    'Accept': 'application/json'
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Enhancement API failed');
-            }
-
-            const data = await response.json();
-            if (data.success && data.image) {
-                return data.image;
-            }
-            throw new Error('Enhancement failed');
-        }
-
-        async function upscaleImage(imageUrl) {
-            try {
-                const apiUrl = `https://image-enhance.apis-bj-devs.workers.dev/?imageurl=${encodeURIComponent(imageUrl)}`;
-
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                    headers: {
-                        'User-Agent': navigator.userAgent,
-                        'X-Session-Id': sessionId,
-                        'Accept': 'application/json'
-                    }
-                });
-
-                if (!response.ok) {
-                    return null; // Fallback to enhanced only
-                }
-
-                const data = await response.json();
-                if (data.status === 'success' && data.download_url) {
-                    return data.download_url;
-                }
-                return null;
-            } catch (error) {
-                console.warn('Upscale API failed, using enhanced result');
-                return null;
-            }
-        }
-
-        function showError(message) {
-            errorMsg.textContent = message;
-            errorMsg.classList.add('show');
-            successMsg.classList.remove('show');
-        }
-
-        // ============ FAQ ACCORDION ============
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const faqItem = question.parentElement;
-                const isOpen = faqItem.classList.contains('open');
-
-                // Close all FAQs
-                document.querySelectorAll('.faq-item').forEach(item => {
-                    item.classList.remove('open');
-                });
-
-                // Open clicked FAQ if it wasn't open
-                if (!isOpen) {
-                    faqItem.classList.add('open');
-                }
-            });
-        });
-
-        // ============ SMOOTH SCROLL FOR NAV LINKS ============
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                const target = document.querySelector(targetId);
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    // Close mobile menu
-                    navLinks.classList.remove('active');
-                }
-            });
-        });
-
-        // ============ INITIALIZATION ============
-        console.log('PixelRevive AI initialized'); // Won't log due to console override
-    </script>
+  // ===== HELPERS =====
+  function formatSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+  }
+  function showError(msg) { errorMsg.textContent = msg; errorBox.classList.add('show'); }
+  function hideError() { errorBox.classList.remove('show'); }
+  function setStep(n, state) {
+    const el = document.getElementById('step' + n);
+    el.classList.remove('active', 'done');
+    if (state) el.classList.add(state);
+    const svg = el.querySelector('svg');
+    if (state === 'active') {
+      svg.innerHTML = '<circle cx="12" cy="12" r="10" stroke-dasharray="30 60" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/></circle>';
+    } else if (state === 'done') {
+      svg.innerHTML = '<path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>';
+    } else {
+      svg.innerHTML = '<circle cx="12" cy="12" r="10"/>';
+    }
+  }
+  function resetSteps() {
+    [1,2,3].forEach(n => setStep(n, null));
+  }
+</script>
 </body>
 </html>
+
