@@ -962,8 +962,10 @@
   const compareOriginal = document.getElementById('compareOriginal');
   const compareResult = document.getElementById('compareResult');
 
-  const IMGBB_KEY = '811f18012a281f06f5d9778186bbb638';
+  // Replace __IMGBB_KEY__ with your real API key during Vercel build (or use process.env.IMGBB_KEY)
+  const IMGBB_KEY = '__IMGBB_KEY__';
   const MAX_SIZE = 32 * 1024 * 1024;
+  const CORS_PROXY = 'https://corsproxy.io/?';
 
   let currentFile = null;
   let currentMode = 'enhance';
@@ -1026,38 +1028,58 @@
     processBtn.disabled = true;
 
     try {
-      // Step 1: Upload to ImgBB
       setStep(1, 'active');
       const publicUrl = await uploadToImgBB(currentFile);
       setStep(1, 'done');
 
-      // Step 2: Process with AI
       setStep(2, 'active');
       const enhancedUrl = await processImage(publicUrl, currentMode);
       setStep(2, 'done');
 
-      // Step 3: Show result
       setStep(3, 'active');
-      await new Promise(r => setTimeout(r, 500));
+      await displayResult(enhancedUrl);
       setStep(3, 'done');
-
-      compareOriginal.src = originalPreviewUrl;
-      compareResult.src = enhancedUrl;
-      downloadBtn.href = enhancedUrl;
-      downloadBtn.download = `pixelrevive_${Date.now()}.jpg`;
 
       loaderBox.classList.remove('show');
       resultBox.classList.add('show');
     } catch (err) {
       loaderBox.classList.remove('show');
       previewBox.classList.add('show');
-      // Show the full error on screen
-      showError(formatError(err));
+      showError(err.message || 'Something went wrong. Please try again.');
     } finally {
       processBtn.disabled = false;
       resetSteps();
     }
   });
+
+  async function displayResult(imageUrl) {
+    if (!imageUrl || typeof imageUrl !== 'string' || !imageUrl.startsWith('http')) {
+      throw new Error('The AI returned an invalid image. Please try again.');
+    }
+
+    compareOriginal.src = originalPreviewUrl;
+    compareResult.src = imageUrl;
+    downloadBtn.href = imageUrl;
+    downloadBtn.download = `pixelrevive_${Date.now()}.jpg`;
+
+    await new Promise((resolve, reject) => {
+      const onLoad = () => {
+        compareResult.removeEventListener('load', onLoad);
+        compareResult.removeEventListener('error', onError);
+        resolve();
+      };
+      const onError = () => {
+        compareResult.removeEventListener('load', onLoad);
+        compareResult.removeEventListener('error', onError);
+        reject(new Error('Failed to load the enhanced image. It might be temporarily unavailable.'));
+      };
+      compareResult.addEventListener('load', onLoad);
+      compareResult.addEventListener('error', onError);
+      if (compareResult.complete && compareResult.naturalWidth > 0) {
+        onLoad();
+      }
+    });
+  }
 
   // ===== API FUNCTIONS =====
   async function uploadToImgBB(file) {
@@ -1079,25 +1101,19 @@
       clearTimeout(timeoutId);
 
       if (!res.ok) {
-        const errorText = await res.text();
-        throw new Error(`ImgBB upload failed (Status ${res.status}). Response: ${errorText.substring(0, 200)}`);
+        throw new Error('Image upload failed. Please try a smaller or different image.');
       }
 
       const data = await res.json();
       if (!data.success) {
-        throw new Error(`ImgBB rejected upload: ${JSON.stringify(data).substring(0, 200)}`);
+        throw new Error('Image upload rejected by hosting service. Try a different image.');
       }
 
-      // Use display_url as primary, fallback to url
-      if (data.data && data.data.display_url) return data.data.display_url;
-      if (data.data && data.data.url) return data.data.url;
-      throw new Error('No image URL in ImgBB response.');
+      return data.data.display_url || data.data.url || (() => { throw new Error('No image URL received from upload.'); })();
     } catch (err) {
       clearTimeout(timeoutId);
-      if (err.name === 'AbortError') {
-        throw new Error('Upload to ImgBB timed out (2 minutes). File may be too large.');
-      }
-      throw err; // rethrow with original message
+      if (err.name === 'AbortError') throw new Error('Upload timed out. Image may be too large.');
+      throw err;
     }
   }
 
@@ -1106,59 +1122,53 @@
       const reader = new FileReader();
       reader.onload = () => {
         const base64 = reader.result.split(',')[1];
-        if (!base64) reject(new Error('Failed to convert image to base64.'));
+        if (!base64) reject(new Error('Failed to process image.'));
         else resolve(base64);
       };
-      reader.onerror = () => reject(new Error('FileReader error while reading file.'));
+      reader.onerror = () => reject(new Error('Could not read the file.'));
       reader.readAsDataURL(file);
     });
   }
 
   async function processImage(url, mode) {
-    const apiUrl = mode === 'upscale'
+    const directApiUrl = mode === 'upscale'
       ? `https://image-enhance.apis-bj-devs.workers.dev/?imageurl=${encodeURIComponent(url)}`
       : `https://image-enhancer-sigma-pearl.vercel.app/enhance?url=${encodeURIComponent(url)}`;
 
-    const controller = new AbortController();
-    // No timeout on the AI API – it may take 30-90 seconds
+    const proxiedUrl = CORS_PROXY + encodeURIComponent(directApiUrl);
 
     try {
-      const res = await fetch(apiUrl, {
+      const res = await fetch(proxiedUrl, {
         method: 'GET',
-        headers: { 'Accept': 'application/json' },
-        signal: controller.signal
+        headers: { 'Accept': 'application/json' }
       });
 
-      if (!res.ok) {
-        const errorText = await res.text();
-        throw new Error(`AI API returned status ${res.status} (${res.statusText}). URL: ${apiUrl} Response: ${errorText.substring(0, 200)}`);
-      }
+      if (!res.ok) throw new Error('AI enhancement service is temporarily unavailable. Please try again later.');
 
       const data = await res.json();
 
-      // Check multiple possible success fields
-      if (data.success && data.image) return data.image;
-      if (data.status === 'success' && data.download_url) return data.download_url;
-      if (data.image) return data.image;
-      if (data.download_url) return data.download_url;
+      let resultUrl = data.image || data.download_url || (data.data && data.data.url) || '';
+      if (!resultUrl) {
+        if (mode === 'upscale') throw new Error('The upscale service did not return an image. Trying HD enhancement...');
+        throw new Error('Enhancement service failed to produce an image. Please try again.');
+      }
 
-      throw new Error(`AI API response missing image URL. Full response: ${JSON.stringify(data).substring(0, 300)}`);
+      // Ensure absolute URL
+      if (!resultUrl.startsWith('http')) {
+        resultUrl = 'https://photoai.imglarger.com' + (resultUrl.startsWith('/') ? '' : '/') + resultUrl;
+      }
+
+      return resultUrl;
     } catch (err) {
-      // Provide a friendly message for CORS / network errors
-      if (err.name === 'TypeError' && err.message === 'Failed to fetch') {
-        throw new Error(
-          `Network error (CORS or connection failure) when calling: ${apiUrl}\n\n` +
-          `Likely causes:\n` +
-          `- The API server does not allow requests from this domain (Cross-Origin).\n` +
-          `- The API server is temporarily down.\n` +
-          `- Your network is blocking the request.\n\n` +
-          `Try opening this page from a different network or use a VPN.`
-        );
+      // If upscale fails, fallback to HD enhancement
+      if (mode === 'upscale') {
+        try {
+          return await processImage(url, 'enhance');
+        } catch (fallbackErr) {
+          throw new Error('Both upscale and HD enhancement failed. The AI services might be down.');
+        }
       }
-      if (err.name === 'AbortError') {
-        throw new Error('AI processing timed out (no response for a long time). The service might be overloaded.');
-      }
-      throw err; // rethrow other errors with original message
+      throw err;
     }
   }
 
@@ -1167,11 +1177,6 @@
     if (bytes < 1024) return bytes + ' B';
     if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
     return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
-  }
-
-  function formatError(err) {
-    if (typeof err === 'string') return err;
-    return err.message || err.toString() || 'Unknown error occurred.';
   }
 
   function showError(msg) {
