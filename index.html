@@ -497,10 +497,10 @@
     display:none;padding:16px;border-radius:12px;
     background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);
     color:#fca5a5;margin-top:16px;font-size:.9rem;
-    align-items:center;gap:10px;
+    align-items:flex-start;gap:10px;
   }
   .error-box.show{display:flex}
-  .error-box svg{width:20px;height:20px;flex-shrink:0}
+  .error-box svg{width:20px;height:20px;flex-shrink:0;margin-top:1px}
 
   /* Responsive */
   @media (max-width:720px){
@@ -876,7 +876,7 @@
       <div class="loader-box" id="loaderBox">
         <div class="loader-ring"></div>
         <h3>Processing Your Image</h3>
-        <p>Our AI is working its magic...</p>
+        <p>Our AI is working its magic... This may take up to 60 seconds.</p>
         <div class="loader-steps">
           <div class="loader-step" id="step1">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
@@ -884,11 +884,11 @@
           </div>
           <div class="loader-step" id="step2">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
-            <span>Running AI enhancement...</span>
+            <span>Running AI enhancement model...</span>
           </div>
           <div class="loader-step" id="step3">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>
-            <span>Finalizing result...</span>
+            <span>Finalizing & downloading result...</span>
           </div>
         </div>
       </div>
@@ -963,7 +963,7 @@
   const compareResult = document.getElementById('compareResult');
 
   const IMGBB_KEY = '811f18012a281f06f5d9778186bbb638';
-  const MAX_SIZE = 32 * 1024 * 1024; // 32MB ImgBB limit
+  const MAX_SIZE = 32 * 1024 * 1024;
 
   let currentFile = null;
   let currentMode = 'enhance';
@@ -980,7 +980,7 @@
   fileInput.addEventListener('change', e => { if (e.target.files[0]) handleFile(e.target.files[0]); });
 
   function handleFile(file) {
-    if (!file.type.startsWith('image/')) { showError('Please select a valid image file.'); return; }
+    if (!file.type.startsWith('image/')) { showError('Please select a valid image file (JPG, PNG, WebP).'); return; }
     if (file.size > MAX_SIZE) { showError('File too large. Maximum size is 32MB.'); return; }
     currentFile = file;
     if (originalPreviewUrl) URL.revokeObjectURL(originalPreviewUrl);
@@ -1022,6 +1022,7 @@
     hideError();
     previewBox.classList.remove('show');
     loaderBox.classList.add('show');
+    resultBox.classList.remove('show');
     processBtn.disabled = true;
 
     try {
@@ -1037,7 +1038,7 @@
 
       // Step 3: Show result
       setStep(3, 'active');
-      await new Promise(r => setTimeout(r, 300));
+      await new Promise(r => setTimeout(r, 500));
       setStep(3, 'done');
 
       compareOriginal.src = originalPreviewUrl;
@@ -1048,10 +1049,10 @@
       loaderBox.classList.remove('show');
       resultBox.classList.add('show');
     } catch (err) {
-      console.error(err);
       loaderBox.classList.remove('show');
       previewBox.classList.add('show');
-      showError(err.message || 'Processing failed. Please try again.');
+      // Show the full error on screen
+      showError(formatError(err));
     } finally {
       processBtn.disabled = false;
       resetSteps();
@@ -1060,49 +1061,104 @@
 
   // ===== API FUNCTIONS =====
   async function uploadToImgBB(file) {
-    // Convert file to base64
     const base64 = await fileToBase64(file);
     const fd = new FormData();
     fd.append('key', IMGBB_KEY);
     fd.append('image', base64);
-    fd.append('name', 'pixelrevive_' + Date.now());
+    fd.append('name', file.name || 'pixelrevive_' + Date.now());
 
-    const res = await fetch('https://api.imgbb.com/1/upload', {
-      method: 'POST',
-      body: fd
-    });
-    if (!res.ok) throw new Error('Upload failed. Please try again.');
-    const data = await res.json();
-    if (!data.success || !data.data || !data.data.url) {
-      throw new Error('Upload rejected by server.');
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 120000);
+
+    try {
+      const res = await fetch('https://api.imgbb.com/1/upload', {
+        method: 'POST',
+        body: fd,
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(`ImgBB upload failed (Status ${res.status}). Response: ${errorText.substring(0, 200)}`);
+      }
+
+      const data = await res.json();
+      if (!data.success) {
+        throw new Error(`ImgBB rejected upload: ${JSON.stringify(data).substring(0, 200)}`);
+      }
+
+      // Use display_url as primary, fallback to url
+      if (data.data && data.data.display_url) return data.data.display_url;
+      if (data.data && data.data.url) return data.data.url;
+      throw new Error('No image URL in ImgBB response.');
+    } catch (err) {
+      clearTimeout(timeoutId);
+      if (err.name === 'AbortError') {
+        throw new Error('Upload to ImgBB timed out (2 minutes). File may be too large.');
+      }
+      throw err; // rethrow with original message
     }
-    return data.data.url;
   }
 
   function fileToBase64(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => {
-        // Strip the data URL prefix to get raw base64
         const base64 = reader.result.split(',')[1];
-        resolve(base64);
+        if (!base64) reject(new Error('Failed to convert image to base64.'));
+        else resolve(base64);
       };
-      reader.onerror = reject;
+      reader.onerror = () => reject(new Error('FileReader error while reading file.'));
       reader.readAsDataURL(file);
     });
   }
 
   async function processImage(url, mode) {
-    if (mode === 'upscale') {
-      const res = await fetch(`https://image-enhance.apis-bj-devs.workers.dev/?imageurl=${encodeURIComponent(url)}`);
+    const apiUrl = mode === 'upscale'
+      ? `https://image-enhance.apis-bj-devs.workers.dev/?imageurl=${encodeURIComponent(url)}`
+      : `https://image-enhancer-sigma-pearl.vercel.app/enhance?url=${encodeURIComponent(url)}`;
+
+    const controller = new AbortController();
+    // No timeout on the AI API – it may take 30-90 seconds
+
+    try {
+      const res = await fetch(apiUrl, {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' },
+        signal: controller.signal
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(`AI API returned status ${res.status} (${res.statusText}). URL: ${apiUrl} Response: ${errorText.substring(0, 200)}`);
+      }
+
       const data = await res.json();
-      if (data.status === 'success' && data.download_url) return data.download_url;
-      throw new Error('Upscale API failed.');
-    } else {
-      const res = await fetch(`https://image-enhancer-sigma-pearl.vercel.app/enhance?url=${encodeURIComponent(url)}`);
-      const data = await res.json();
+
+      // Check multiple possible success fields
       if (data.success && data.image) return data.image;
-      throw new Error('Enhancement API failed.');
+      if (data.status === 'success' && data.download_url) return data.download_url;
+      if (data.image) return data.image;
+      if (data.download_url) return data.download_url;
+
+      throw new Error(`AI API response missing image URL. Full response: ${JSON.stringify(data).substring(0, 300)}`);
+    } catch (err) {
+      // Provide a friendly message for CORS / network errors
+      if (err.name === 'TypeError' && err.message === 'Failed to fetch') {
+        throw new Error(
+          `Network error (CORS or connection failure) when calling: ${apiUrl}\n\n` +
+          `Likely causes:\n` +
+          `- The API server does not allow requests from this domain (Cross-Origin).\n` +
+          `- The API server is temporarily down.\n` +
+          `- Your network is blocking the request.\n\n` +
+          `Try opening this page from a different network or use a VPN.`
+        );
+      }
+      if (err.name === 'AbortError') {
+        throw new Error('AI processing timed out (no response for a long time). The service might be overloaded.');
+      }
+      throw err; // rethrow other errors with original message
     }
   }
 
@@ -1112,8 +1168,19 @@
     if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
     return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
   }
-  function showError(msg) { errorMsg.textContent = msg; errorBox.classList.add('show'); }
+
+  function formatError(err) {
+    if (typeof err === 'string') return err;
+    return err.message || err.toString() || 'Unknown error occurred.';
+  }
+
+  function showError(msg) {
+    errorMsg.textContent = msg;
+    errorBox.classList.add('show');
+  }
+
   function hideError() { errorBox.classList.remove('show'); }
+
   function setStep(n, state) {
     const el = document.getElementById('step' + n);
     el.classList.remove('active', 'done');
@@ -1127,10 +1194,10 @@
       svg.innerHTML = '<circle cx="12" cy="12" r="10"/>';
     }
   }
+
   function resetSteps() {
     [1,2,3].forEach(n => setStep(n, null));
   }
 </script>
 </body>
 </html>
-
