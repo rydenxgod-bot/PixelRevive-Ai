@@ -965,8 +965,12 @@
   const IMGBB_KEY = '811f18012a281f06f5d9778186bbb638';
   const MAX_SIZE = 32 * 1024 * 1024;
 
-  // Public CORS proxy
-  const CORS_PROXY = 'https://corsproxy.io/?';
+  // Multiple CORS proxies - tries each one in order
+  const CORS_PROXIES = [
+    'https://api.allorigins.win/raw?url=',
+    'https://cors-anywhere.herokuapp.com/',
+    'https://api.codetabs.com/v1/proxy?quest='
+  ];
 
   let currentFile = null;
   let currentMode = 'enhance';
@@ -1029,17 +1033,14 @@
     processBtn.disabled = true;
 
     try {
-      // Step 1: Upload to ImgBB
       setStep(1, 'active');
       const publicUrl = await uploadToImgBB(currentFile);
       setStep(1, 'done');
 
-      // Step 2: Process with AI (via CORS proxy)
       setStep(2, 'active');
       const enhancedUrl = await processImage(publicUrl, currentMode);
       setStep(2, 'done');
 
-      // Step 3: Display result
       setStep(3, 'active');
       await displayResult(enhancedUrl);
       setStep(3, 'done');
@@ -1056,20 +1057,16 @@
     }
   });
 
-  // Display result and set up error handling on the image
   async function displayResult(imageUrl) {
-    // Make sure the URL is a non‑empty string that looks like a URL
     if (!imageUrl || typeof imageUrl !== 'string' || !imageUrl.startsWith('http')) {
       throw new Error('The AI returned an invalid image URL.');
     }
 
-    // Set the image source and download link
     compareOriginal.src = originalPreviewUrl;
     compareResult.src = imageUrl;
     downloadBtn.href = imageUrl;
     downloadBtn.download = `pixelrevive_${Date.now()}.jpg`;
 
-    // Wait for the image to load (or fail)
     await new Promise((resolve, reject) => {
       const onLoad = () => {
         compareResult.removeEventListener('load', onLoad);
@@ -1083,7 +1080,6 @@
       };
       compareResult.addEventListener('load', onLoad);
       compareResult.addEventListener('error', onError);
-      // If the image is already cached and loaded, trigger load immediately
       if (compareResult.complete && compareResult.naturalWidth > 0) {
         onLoad();
       }
@@ -1110,23 +1106,20 @@
       clearTimeout(timeoutId);
 
       if (!res.ok) {
-        const errorText = await res.text();
-        throw new Error(`ImgBB upload failed (Status ${res.status}). Response: ${errorText.substring(0, 200)}`);
+        throw new Error('Upload failed. Please try a smaller image.');
       }
 
       const data = await res.json();
       if (!data.success) {
-        throw new Error(`ImgBB rejected upload: ${JSON.stringify(data).substring(0, 200)}`);
+        throw new Error('Upload rejected. Try a different image format.');
       }
 
       if (data.data && data.data.display_url) return data.data.display_url;
       if (data.data && data.data.url) return data.data.url;
-      throw new Error('No image URL in ImgBB response.');
+      throw new Error('No image URL received from upload.');
     } catch (err) {
       clearTimeout(timeoutId);
-      if (err.name === 'AbortError') {
-        throw new Error('Upload to ImgBB timed out (2 minutes). File may be too large.');
-      }
+      if (err.name === 'AbortError') throw new Error('Upload timed out. Image may be too large.');
       throw err;
     }
   }
@@ -1136,63 +1129,72 @@
       const reader = new FileReader();
       reader.onload = () => {
         const base64 = reader.result.split(',')[1];
-        if (!base64) reject(new Error('Failed to convert image to base64.'));
+        if (!base64) reject(new Error('Failed to process image.'));
         else resolve(base64);
       };
-      reader.onerror = () => reject(new Error('FileReader error while reading file.'));
+      reader.onerror = () => reject(new Error('Could not read the file.'));
       reader.readAsDataURL(file);
     });
   }
 
+  // Try fetching through multiple proxies
+  async function fetchWithProxy(directUrl) {
+    let lastError = null;
+    
+    for (const proxy of CORS_PROXIES) {
+      try {
+        const proxiedUrl = proxy + encodeURIComponent(directUrl);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 60000);
+        
+        const res = await fetch(proxiedUrl, {
+          method: 'GET',
+          headers: { 'Accept': 'application/json' },
+          signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
+        
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch (err) {
+        lastError = err;
+        continue; // Try next proxy
+      }
+    }
+    
+    throw new Error('All proxy servers are currently unavailable. Please try again later.');
+  }
+
   async function processImage(url, mode) {
-    // Build the direct API URL
     const directApiUrl = mode === 'upscale'
       ? `https://image-enhance.apis-bj-devs.workers.dev/?imageurl=${encodeURIComponent(url)}`
       : `https://image-enhancer-sigma-pearl.vercel.app/enhance?url=${encodeURIComponent(url)}`;
 
-    // Wrap with CORS proxy
-    const proxiedUrl = CORS_PROXY + encodeURIComponent(directApiUrl);
-
     try {
-      const res = await fetch(proxiedUrl, {
-        method: 'GET',
-        headers: { 'Accept': 'application/json' }
-      });
+      const data = await fetchWithProxy(directApiUrl);
 
-      if (!res.ok) {
-        const errorText = await res.text();
-        throw new Error(`AI API returned status ${res.status}. Response: ${errorText.substring(0, 200)}`);
-      }
-
-      const data = await res.json();
-
-      // Try multiple possible success fields
       let resultUrl = data.image || data.download_url || (data.data && data.data.url) || '';
 
       if (!resultUrl) {
-        throw new Error(`AI API response missing image URL. Response: ${JSON.stringify(data).substring(0, 300)}`);
+        if (mode === 'upscale') throw new Error('NO_IMAGE');
+        throw new Error('AI processing failed to produce a result.');
       }
 
-      // If the URL is relative, prepend the API's base (best effort)
+      // Ensure absolute URL
       if (!resultUrl.startsWith('http')) {
-        if (mode === 'upscale') {
-          resultUrl = 'https://photoai.imglarger.com' + (resultUrl.startsWith('/') ? '' : '/') + resultUrl;
-        } else {
-          // For enhance API, the image host is also photoai.imglarger.com in many cases
-          resultUrl = 'https://photoai.imglarger.com' + (resultUrl.startsWith('/') ? '' : '/') + resultUrl;
-        }
+        resultUrl = 'https://photoai.imglarger.com' + (resultUrl.startsWith('/') ? '' : '/') + resultUrl;
       }
 
       return resultUrl;
     } catch (err) {
-      // If it's the upscale mode that failed, try the enhance API as a fallback
-      if (mode === 'upscale') {
-        console.warn('Upscale failed, falling back to HD enhancement.', err);
+      // If upscale fails, fallback to HD enhancement
+      if (mode === 'upscale' && (err.message === 'NO_IMAGE' || err.message.includes('proxy'))) {
         try {
-          const fallbackUrl = await processImage(url, 'enhance');
-          return fallbackUrl; // this will be displayed even though user selected upscale
+          return await processImage(url, 'enhance');
         } catch (fallbackErr) {
-          throw new Error('Both upscale and fallback enhancement failed. Original error: ' + err.message);
+          throw new Error('Both enhancement modes failed. Please try again later.');
         }
       }
       throw err;
